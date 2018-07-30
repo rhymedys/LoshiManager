@@ -1,0 +1,209 @@
+@import '~antd/lib/style/themes/default.less';
+
+
+.chatMessageList {
+  flex: 1;
+  padding: 8px 10px 0 10px;
+  overflow: auto;
+}
+.chatMessage {
+  display: flex;
+  margin-right: 54px;
+  margin-bottom: 10px;
+  position: relative;
+
+  .avatar {
+      min-width: 44px;
+  }
+  .right {
+      margin-left: 12px;
+  }
+  .nicknameTime {
+
+  }
+  .tag {
+      height: 18px;
+      line-height: 18px;
+      border-radius: 8px;
+      padding: 0 6px;
+      display: inline-block;
+      font-size: 10px;
+      background-color: @primary-color;
+      color:@text-color;
+      transform: translateY(-1px);
+  }
+  .nickname {
+      color: #333;
+      font-size: 13px;
+      margin-left: 6px;
+      user-select: text;
+  }
+  .time {
+      color: #666;
+      font-size: 12px;
+      margin-left: 8px;
+  }
+  .content {
+      display: inline-block;
+      color: #555;
+      font-size: 14px;
+      background-color: #e2e2e2;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border-top-left-radius: 0px;
+      min-height: 28px;
+      margin-top: 3px;
+      &.sys{
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 2px;
+        padding: 2px 5px;
+        min-height: 0px;
+        font-size: 12px;
+
+      }
+  }
+  .arrow {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0px 7px 15px 0;
+      border-color: transparent #e2e2e2 transparent transparent;
+      position: absolute;
+      top: 24px;
+      left: 38px;
+  }
+  &.sys{
+    margin-right: 0px;
+  }
+  &.self {
+      flex-direction: row-reverse;
+      margin-right: 0px;
+      margin-left: 54px;
+
+      .right {
+          margin-left: 0px;
+          margin-right: 12px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+      }
+      .nicknameTime {
+          display: flex;
+          flex-direction: row-reverse;
+      }
+      .tag {
+          display: none;
+      }
+      .time {
+          transform: translateY(2px);
+      }
+      .content {
+          color: rgba(255, 255, 255, 0.9);
+          background-color: @primary-color;
+          border-top-left-radius: 8px;
+          border-top-right-radius: 0px;
+      }
+      .arrow {
+          border-width: 0 0 15px 7px;
+          border-color: transparent transparent transparent @primary-color;
+          left: initial;
+          right: 38px;
+          top: 22px;
+      }
+
+      a{
+        color: rgba(255, 255, 255, 0.9)
+      }
+  }
+  .expression-baidu {
+      width: 30px;
+      height: 30px;
+      background-repeat: no-repeat;
+      margin: 0 2px;
+      background-size: 30px auto;
+
+  }
+  .text {
+      user-select: text;
+      word-break: break-word;
+      & img {
+          user-select: text;
+      }
+      & a {
+          user-select: text;
+      }
+  }
+  .image {
+      position: relative;
+      .progress, .progress-number {
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 80px;
+          height: 80px;
+      }
+      .progress-number {
+          color: @text-color;
+          text-align: center;
+          line-height: 80px;
+          font-size: 18px;
+      }
+      .img {
+          max-width: 500px;
+          max-height: 400px;
+      }
+
+      &.loading {
+          .img {
+              filter: blur(5px);
+          }
+          .progress {
+              display: block;
+          }
+          .progress-number {
+              display: block;
+          }
+      }
+      &.huaji {
+          .img {
+              width: auto;
+              max-height: 150px;
+          }
+      }
+  }
+  .code {
+      .button {
+          width: 160px;
+          padding: 0 4px;
+          text-align: center;
+          cursor: pointer;
+          color: @text-color;
+          & > div {
+              display: flex;
+              border-bottom: 1px solid #eee;
+              align-items: center;
+              .icon {
+                  width: 30px;
+                  height: 30px;
+                  text-align: center;
+                  line-height: 30px;
+                  margin: 0 2px;
+              }
+              .code-info {
+                  & > span:last-child {
+                      margin-left: 8px;
+                  }
+              }
+          }
+          & > p {
+              display: inline-block;
+              font-size: 12px;
+              text-align: center;
+              margin-top: 6px;
+          }
+      }
+  }
+}
