@@ -67,8 +67,10 @@ export default class GlobalHeader extends PureComponent {
       onNoticeVisibleChange,
       onMenuClick,
       onNoticeClear,
+      title,
       showCollapsed  = true,
-      showHeaderSearch = true
+      showHeaderSearch = true,
+      showTitle=false
     } = this.props;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
@@ -77,9 +79,6 @@ export default class GlobalHeader extends PureComponent {
         </Menu.Item>
         <Menu.Item disabled>
           <Icon type="setting" />设置
-        </Menu.Item>
-        <Menu.Item key="triggerError">
-          <Icon type="close-circle" />触发报错
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout">
@@ -103,6 +102,14 @@ export default class GlobalHeader extends PureComponent {
             type={collapsed ? 'menu-unfold' : 'menu-fold'}
             onClick={this.toggle}
           />
+          )
+        }
+        {
+          showTitle && (
+            <div to="/" className={styles.logo} key="logo">
+              <img src={logo} alt="logo" width="32" />
+              {title}
+           </div>
           )
         }
         <div className={styles.right}>

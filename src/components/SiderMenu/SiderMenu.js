@@ -4,6 +4,7 @@ import pathToRegexp from 'path-to-regexp';
 import { Link } from 'dva/router';
 import styles from './index.less';
 import { urlToList } from '../_utils/pathTools';
+import appConfig from '../../config/app'
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -221,7 +222,7 @@ export default class SiderMenu extends PureComponent {
         <div className={styles.logo} key="logo">
           <Link to="/">
             <img src={logo} alt="logo" />
-            <h1>Loshi Manager</h1>
+            <h1>{appConfig.title}</h1>
           </Link>
         </div>
         <Menu
