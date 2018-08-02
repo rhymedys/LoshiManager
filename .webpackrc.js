@@ -29,14 +29,7 @@ const config ={
   disableDynamicImport: false,
   publicPath: process.env.NODE_ENV === 'production' ? '/ip-healthmanager-manager-web/admin/static/'
   : '/',
-  hash: true,
-  proxy:{
-    '/loshi/api/login':{
-      "target": "http://127.0.0.1:7001/",
-      "changeOrigin": true,
-      "pathRewrite": { "^localhost:8000" : "" }
-    }
-  }
+  hash: true
 };
 
 

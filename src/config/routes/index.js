@@ -2,13 +2,15 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-05-30 14:24:19
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-07-30 10:08:46
+ * @Last Modified time: 2018-08-02 10:15:54
  */
 
  import userConfig from './userConfig'
  import exceptionConfig from './exceptionConfig'
+ import systemConfig from './systemConfig'
 
  export default {
   exceptionConfig,
   userConfig,
+  systemConfig,
  }

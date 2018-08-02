@@ -6,6 +6,7 @@ import GlobalFooter from '../components/GlobalFooter';
 import styles from './UserLayout.less';
 import logo from '../assets/logo.svg';
 import { getRoutes } from '../utils/utils';
+import appConfig from '../config/app'
 
 
 
@@ -49,7 +50,7 @@ class UserLayout extends React.PureComponent {
                   exact={item.exact}
                 />
               ))}
-              <Redirect exact from="/user" to="/user/login" />
+              <Redirect exact from={`${appConfig.appRootPath}user`} to={`${appConfig.appRootPath}user/login`} />
             </Switch>
           </div>
           <GlobalFooter  copyright={copyright} />

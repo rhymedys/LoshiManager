@@ -67,6 +67,8 @@ export default class GlobalHeader extends PureComponent {
       onNoticeVisibleChange,
       onMenuClick,
       onNoticeClear,
+      showCollapsed  = true,
+      showHeaderSearch = true
     } = this.props;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
@@ -94,23 +96,29 @@ export default class GlobalHeader extends PureComponent {
           </Link>,
           <Divider type="vertical" key="line" />,
         ]}
-        <Icon
-          className={styles.trigger}
-          type={collapsed ? 'menu-unfold' : 'menu-fold'}
-          onClick={this.toggle}
-        />
-        <div className={styles.right}>
-          <HeaderSearch
-            className={`${styles.action} ${styles.search}`}
-            placeholder="站内搜索"
-            dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
-            onSearch={value => {
-              console.log('input', value); // eslint-disable-line
-            }}
-            onPressEnter={value => {
-              console.log('enter', value); // eslint-disable-line
-            }}
+        {
+          showCollapsed && (
+            <Icon
+            className={styles.trigger}
+            type={collapsed ? 'menu-unfold' : 'menu-fold'}
+            onClick={this.toggle}
           />
+          )
+        }
+        <div className={styles.right}>
+          {showHeaderSearch && (
+            <HeaderSearch
+              className={`${styles.action} ${styles.search}`}
+              placeholder="站内搜索"
+              dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
+              onSearch={value => {
+                console.log('input', value); // eslint-disable-line
+              }}
+              onPressEnter={value => {
+                console.log('enter', value); // eslint-disable-line
+              }}
+              />
+          )}
           <Tooltip title="使用文档">
             <a
               target="_blank"
@@ -154,7 +162,7 @@ export default class GlobalHeader extends PureComponent {
           {currentUser.name ? (
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>
-                <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
+                <Avatar size="small" className={styles.avatar} src={currentUser.avatar}>{currentUser.avatar?null:currentUser.name}</Avatar>
                 <span className={styles.name}>{currentUser.name}</span>
               </span>
             </Dropdown>
