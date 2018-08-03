@@ -123,12 +123,12 @@ class SystemLayout extends React.PureComponent{
           </Switch>
         </Content>
         <Footer style={{ padding: 0 }}>
-          <GlobalFooter />
+          <GlobalFooter links={[{title:'LoshiManager'}]} copyright={<span>Copyright {<Icon type="copyright" />} rhymedys@gmail.com</span>} />
         </Footer>
       </Layout>
     )
     return (
-      <DocumentTitle title={this.getPageTitle()}>
+      <DocumentTitle  title={this.getPageTitle()}>
         {layout}
       </DocumentTitle>
     )

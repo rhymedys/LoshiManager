@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-06-25 15:01:56
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-06-29 11:16:15
+ * @Last Modified time: 2018-08-03 13:37:59
  */
 import React from 'react';
 import qs from 'qs'
@@ -26,7 +26,7 @@ export default ComponsedComponent => class extends React.Component {
    *
    * @param {*} pageParams
    */
-  onTableChange(pageParams,filters,sorter){
+  onTableChange=(pageParams,filters,sorter)=>{
    const {
      pageSize='10',
      page='1',

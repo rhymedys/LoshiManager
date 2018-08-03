@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-01 11:20:26
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-03 12:31:52
+ * @Last Modified time: 2018-08-03 16:37:31
  */
 
 export default {
@@ -38,6 +38,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },
@@ -56,6 +57,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },
@@ -74,6 +76,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },
@@ -92,6 +95,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },
@@ -110,6 +114,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },
@@ -128,6 +133,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },
@@ -146,6 +152,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },
@@ -164,6 +171,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },
@@ -182,6 +190,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },
@@ -200,6 +209,7 @@ export default {
           "userId": 2,
           "isStatisiPages": 0,
           "isStatisiAjax": 0,
+          "isStatisiSystem": 0,
           "isStatisiResource": 0,
           "isStatisiError": 0,
         },

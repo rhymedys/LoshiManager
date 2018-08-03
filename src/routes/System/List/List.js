@@ -2,31 +2,38 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 11:32:57
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-03 12:33:54
+ * @Last Modified time: 2018-08-03 16:37:48
  */
 
 
 import React from 'react';
-import { Table } from 'antd';
+import { Table,Popconfirm  } from 'antd';
 import { Link } from 'dva/router';
 import {generatePathName} from '@/utils/router'
 import queryString from 'qs'
 import {BaseListComponents} from '../../Base'
 
+const operationStyles = {
+  marginRight:10,
+}
+
 class List extends React.Component {
 
-
+  static render2DomByStatus(num){
+    return <span>{num===1?'是':'否'}</span>
+  }
 
 
   render() {
     const { loading, dataSource, pagination} = this.props;
+
     const columns =[
       {
         title: '应用名称',
         dataIndex: 'systemName',
         key: 'systemName',
         fixed:'left',
-        width:200,
+        width:150,
       },
       {
         title: '应用链接',
@@ -43,88 +50,112 @@ class List extends React.Component {
         width:200,
       },
       {
-        title: '页面加载阀值',
-        dataIndex: 'slowPageTime',
-        key: 'slowPageTime',
-      },
-      {
-        title: 'JS资源阀值',
-        dataIndex: 'slowJsTime',
-        key: 'slowJsTime',
-      },
-      {
-        title: 'CSS资源阀值',
-        dataIndex: 'slowCssTime',
-        key: 'slowCssTime',
+        title:'阀值（单位:s）',
+        children:[
+          {
+            title: '页面加载',
+            dataIndex: 'slowPageTime',
+            key: 'slowPageTime',
+          },
+          {
+            title: 'JS资源',
+            dataIndex: 'slowJsTime',
+            key: 'slowJsTime',
+          },
+          {
+            title: 'CSS资源',
+            dataIndex: 'slowCssTime',
+            key: 'slowCssTime',
 
+          },
+          {
+            title: 'IMG资源',
+            dataIndex: 'slowImgTime',
+            key: 'slowImgTime',
+
+          },
+          {
+            title: 'AJAX加载',
+            dataIndex: 'slowAajxTime',
+            key: 'slowAajxTime',
+
+          },
+        ],
       },
       {
-        title: 'IMG资源阀值',
-        dataIndex: 'slowImgTime',
-        key: 'slowImgTime',
+        title:'统计类别',
+        children:[
+          {
+            title: '项目',
+            dataIndex: 'isUse',
+            key: 'isUse',
+            render:List.render2DomByStatus,
+          },
+          {
+            title: '页面',
+            dataIndex: 'isStatisiPages',
+            key: 'isStatisiPages',
+            render:List.render2DomByStatus,
 
-      },
-      {
-        title: 'AJAX加载阀值',
-        dataIndex: 'slowAajxTime',
-        key: 'slowAajxTime',
+          },
+          {
+            title: 'AJAX',
+            dataIndex: 'isStatisiAjax',
+            key: 'isStatisiAjax',
+            render:List.render2DomByStatus,
 
-      },
-      {
-        title: '是否统计项目',
-        dataIndex: 'isUse',
-        key: 'isUse',
+          },
+          {
+            title: '页面资源',
+            dataIndex: 'isStatisiResource',
+            key: 'isStatisiResource',
+            render:List.render2DomByStatus,
 
-      },
-      {
-        title: '是否统计页面',
-        dataIndex: 'isStatisiPages',
-        key: 'isStatisiPages',
+          },
+          {
+            title: '用户系统信息',
+            dataIndex: 'isStatisiSystem',
+            key: 'isStatisiSystem',
+            render:List.render2DomByStatus,
 
-      },
-      {
-        title: '是否统计AJAX',
-        dataIndex: 'isStatisiAjax',
-        key: 'isStatisiAjax',
+          },
+          {
+            title: '错误信息',
+            dataIndex: 'isStatisiError',
+            key: 'isStatisiError',
+            render:List.render2DomByStatus,
 
+          },
+        ],
       },
-      {
-        title: '是否统计页面资源',
-        dataIndex: 'isStatisiResource',
-        key: 'isStatisiResource',
 
-      },
-      {
-        title: '是否统计用户系统信息',
-        dataIndex: 'isStatisiSystem',
-        key: 'isStatisiSystem',
-
-      },
-      {
-        title: '是否统计错误信息',
-        dataIndex: 'isStatisiError',
-        key: 'isStatisiError',
-
-      },
       {
         title: '操作',
         dataIndex: 'operation',
         key: 'operation',
         fixed:'right',
-        width:100,
+        width:150,
+        render:(text,record)=>{
+          return [
+            <a key="setting" style={operationStyles}>设置</a>,
+            <Popconfirm  key="delete" title="是否确认删除该应用?" onConfirm={this.props.deleteApplication.bind(null,record)}>
+              <a style={operationStyles} >删除</a>
+            </Popconfirm>,
+            <a key="details" style={operationStyles}>详情</a>,
+          ]
+        },
       },
     ]
 
     return (
       <Table
-        showHeader={dataSource && dataSource.length}
+        showHeader={!!(dataSource && dataSource.length)}
         columns={columns}
         dataSource={dataSource}
         loading={loading}
         onChange={this.props.onTableChange.bind(this)}
         pagination={pagination}
-        scroll={{x:2000}}
-        simple
+        scroll={{x:1500}}
         size='middle'
         rowKey={record => record.appId}
       />

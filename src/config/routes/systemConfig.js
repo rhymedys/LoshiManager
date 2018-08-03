@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-02 09:59:17
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-03 11:27:36
+ * @Last Modified time: 2018-08-03 16:54:18
  */
 export default function (app, dynamicWrapper) {
   return {
@@ -15,7 +15,7 @@ export default function (app, dynamicWrapper) {
       component: dynamicWrapper(app, ['system'], () => import('../../routes/System/List')),
     },
     '/system/create': {
-      component: dynamicWrapper(app, [], () => import('../../routes/Exception/403')),
+      component: dynamicWrapper(app, [], () => import('../../routes/System/Create')),
     },
     '/system/403': {
       component: dynamicWrapper(app, [], () => import('../../routes/Exception/403')),

@@ -2,10 +2,11 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-01 11:23:38
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-03 11:21:03
+ * @Last Modified time: 2018-08-03 13:51:46
  */
 import {stringify} from 'qs';
 import request from '../utils/request';
+import {addPagnationParams} from '../utils/utils'
 
 /**
  * 创建应用
@@ -55,6 +56,6 @@ export async function deleteSystem(params){
  * @param {*} params
  * @returns
  */
-export async function queryByCurrentUser(){
-  return request(`system/queryByCurrentUser`)
+export async function queryByCurrentUser(params){
+  return request(`system/queryByCurrentUser?${stringify(addPagnationParams(params))}`)
 }
