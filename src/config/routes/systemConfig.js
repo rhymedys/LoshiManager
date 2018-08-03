@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-02 09:59:17
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-02 14:38:57
+ * @Last Modified time: 2018-08-03 11:27:36
  */
 export default function (app, dynamicWrapper) {
   return {
@@ -12,7 +12,7 @@ export default function (app, dynamicWrapper) {
         import ('../../layouts/SystemLayout')),
     },
     '/system/list': {
-      component: dynamicWrapper(app, [], () => import('../../routes/Exception/403')),
+      component: dynamicWrapper(app, ['system'], () => import('../../routes/System/List')),
     },
     '/system/create': {
       component: dynamicWrapper(app, [], () => import('../../routes/Exception/403')),

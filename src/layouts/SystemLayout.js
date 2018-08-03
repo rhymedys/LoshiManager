@@ -79,12 +79,10 @@ class SystemLayout extends React.PureComponent{
   render(){
     const {
       currentUser,
-      collapsed,
       fetchingNotices,
       notices,
       routerData,
       match,
-      location,
     } = this.props;
     const bashRedirect = this.getBashRedirect();
 
@@ -139,7 +137,6 @@ class SystemLayout extends React.PureComponent{
 
 export default connect(({ user, global, loading }) => ({
   currentUser: user.currentUser,
-  collapsed: global.collapsed,
   fetchingNotices: loading.effects['global/fetchNotices'],
   notices: global.notices,
 })) (SystemLayout)

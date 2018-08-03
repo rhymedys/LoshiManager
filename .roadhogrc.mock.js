@@ -12,6 +12,7 @@ const proxy = {
   'POST login':login.login,
 
   'GET system/delete':system.delete,
+  'GET system/queryByCurrentUser':system.queryByCurrentUser,
   'GET user/query':user.query,
   'POST system/update':system.update,
   'POST system/create':system.create,

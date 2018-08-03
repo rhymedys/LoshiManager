@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-01 11:23:38
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-01 13:42:22
+ * @Last Modified time: 2018-08-03 11:21:03
  */
 import {stringify} from 'qs';
 import request from '../utils/request';
@@ -46,4 +46,15 @@ export async function updateSystem(params){
  */
 export async function deleteSystem(params){
   return request(`system/delete?${stringify(params)}`)
+}
+
+/**
+ * 查询当前用户所有应用
+ *
+ * @export
+ * @param {*} params
+ * @returns
+ */
+export async function queryByCurrentUser(){
+  return request(`system/queryByCurrentUser`)
 }
