@@ -5,7 +5,7 @@
  * @Last Modified time: 2018-06-01 15:06:16
  */
 
-export default{
+export default {
   colProps: {
     lg: 8,
     md: 10,
@@ -32,9 +32,7 @@ export default{
 
     style: {
       height: 30,
-      padding:0,
+      padding: 0,
     },
   },
-}
-
-
+};

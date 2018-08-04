@@ -6,7 +6,7 @@
  * 错误模块
  */
 
-export default function (app, dynamicWrapper) {
+export default function(app, dynamicWrapper) {
   return {
     '/exception/403': {
       component: dynamicWrapper(app, [], () => import('../../routes/Exception/403')),
@@ -18,7 +18,9 @@ export default function (app, dynamicWrapper) {
       component: dynamicWrapper(app, [], () => import('../../routes/Exception/500')),
     },
     '/exception/trigger': {
-      component: dynamicWrapper(app, ['error'], () =>import('../../routes/Exception/triggerException')),
+      component: dynamicWrapper(app, ['error'], () =>
+        import('../../routes/Exception/triggerException')
+      ),
     },
-  }
+  };
 }

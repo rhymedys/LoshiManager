@@ -1,9 +1,8 @@
 import fetch from 'dva/fetch';
-import { notification,message } from 'antd';
+import { notification, message } from 'antd';
 import { routerRedux } from 'dva/router';
-import {appConfig} from '@/config'
+import { appConfig } from '@/config';
 import store from '../index';
-
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -23,15 +22,14 @@ const codeMessage = {
   504: '网关超时。',
 };
 
-async function checkResultCode(response){
-  const res = await response.clone().json()
-  if(res && res.resultCode !==0 ){
-    message.error(res.resultDesc || '网络异常')
+async function checkResultCode(response) {
+  const res = await response.clone().json();
+  if (res && res.resultCode !== 0) {
+    message.error(res.resultDesc || '网络异常');
   }
 
-  return response
+  return response;
 }
-
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -59,7 +57,7 @@ export default function request(url, options) {
   const defaultOptions = {
     credentials: 'include',
   };
-  const newOptions = { ...defaultOptions, ...options};
+  const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     if (!(newOptions.body instanceof FormData)) {
       newOptions.headers = {
@@ -77,14 +75,14 @@ export default function request(url, options) {
     }
   }
 
-  const res = fetch(`${appConfig.appRootPath.replace('admin/','loshi/api/')}${url}`, newOptions)
+  const res = fetch(`${appConfig.appRootPath.replace('admin/', 'loshi/api/')}${url}`, newOptions)
     .then(checkStatus)
     .then(checkResultCode)
     .then(response => {
       if (newOptions.method === 'DELETE' || response.status === 204) {
         return response.text();
       }
-      return response.json()
+      return response.json();
     })
     // .then(checkResultCode)
     .catch(e => {
@@ -109,6 +107,5 @@ export default function request(url, options) {
       }
     });
 
-
-    return res
+  return res;
 }

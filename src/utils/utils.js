@@ -70,7 +70,6 @@ export function getPlainNode(nodeList, parentPath = '') {
   return arr;
 }
 
-
 function getRelation(str1, str2) {
   if (str1 === str2) {
     console.warn('Two path are equal!'); // eslint-disable-line
@@ -140,8 +139,7 @@ export const removeAttFromObj = (obj, keyArray) => {
   if (obj) {
     if (keyArray && keyArray.length > 0) {
       const result = {};
-      for (const [k,
-        v] of Object.entries(obj)) {
+      for (const [k, v] of Object.entries(obj)) {
         if (!keyArray.includes(k)) {
           result[k] = v;
         }
@@ -152,18 +150,17 @@ export const removeAttFromObj = (obj, keyArray) => {
   }
 };
 
-export const addPagnationParams =(data)=>{
+export const addPagnationParams = data => {
   let res = {
     ...data,
+  };
+
+  if (data) {
+    res.limit = data.pageSize || 10;
+    res.start = data.page > 1 ? (data.page - 1) * data.pageSize : 0;
   }
 
-  if(data){
-    res.limit = data.pageSize || 10
-    res.start = data.page > 1 ? (data.page - 1)  * data.pageSize : 0
-  }
+  res = removeAttFromObj(res, ['pageSize', 'page']);
 
-
-  res=removeAttFromObj(res,['pageSize','page'])
-
-  return res
-}
+  return res;
+};

@@ -4,12 +4,11 @@
  * @Last Modified by: Rhymedys
  * @Last Modified time: 2018-08-03 16:54:18
  */
-export default function (app, dynamicWrapper) {
+export default function(app, dynamicWrapper) {
   return {
     // 以下为应用模块
     '/system': {
-      component: dynamicWrapper(app, ['user'], () =>
-        import ('../../layouts/SystemLayout')),
+      component: dynamicWrapper(app, ['user'], () => import('../../layouts/SystemLayout')),
     },
     '/system/list': {
       component: dynamicWrapper(app, ['system'], () => import('../../routes/System/List')),
@@ -27,7 +26,9 @@ export default function (app, dynamicWrapper) {
       component: dynamicWrapper(app, [], () => import('../../routes/Exception/500')),
     },
     '/system/trigger': {
-      component: dynamicWrapper(app, ['error'], () =>import('../../routes/Exception/triggerException')),
+      component: dynamicWrapper(app, ['error'], () =>
+        import('../../routes/Exception/triggerException')
+      ),
     },
-  }
+  };
 }

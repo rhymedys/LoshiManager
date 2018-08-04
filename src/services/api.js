@@ -61,7 +61,6 @@ export async function queryFakeList(params) {
 }
 
 export async function fakeAccountLogin(params) {
-  console.log(params)
   return request('/api/login/account', {
     method: 'POST',
     body: params,

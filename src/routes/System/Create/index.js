@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 16:52:18
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-04 22:21:04
+ * @Last Modified time: 2018-08-04 22:37:43
  */
 
 import React, { Fragment, PureComponent } from 'react';
@@ -113,9 +113,7 @@ class Index extends PureComponent {
         onOk: async () => {
           await createSystem({
             body: values,
-          }).then(() => {
-            window.history.back();
-          });
+          }).then(window.history.back);
         },
       });
     });

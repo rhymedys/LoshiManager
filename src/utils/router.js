@@ -5,49 +5,51 @@
  * @Last Modified time: 2018-06-13 11:37:32
  */
 
-
 import { routerRedux } from 'dva/router';
-import  queryString from 'qs'
-import {appConfig} from '../config'
+import queryString from 'qs';
+import { appConfig } from '../config';
 
 /**
  *
  * 替换当前路由
  * @param {any} { context, data,newPathName}
  */
-function replaceRouter({ context, data, newPathName }){
+function replaceRouter({ context, data, newPathName }) {
   if (context) {
     const { dispatch, $route } = context.props;
     const { search, pathname } = $route;
-    const query= {
-      ...queryString.parse(search.replace('?','')),
+    const query = {
+      ...queryString.parse(search.replace('?', '')),
       ...data,
-    }
-    dispatch(routerRedux.replace({
-      ...$route,
-      pathname: newPathName || pathname,
-      search:queryString.stringify(query),
-    }));
+    };
+    dispatch(
+      routerRedux.replace({
+        ...$route,
+        pathname: newPathName || pathname,
+        search: queryString.stringify(query),
+      })
+    );
   }
-};
+}
 
- /**
+/**
  * 加载新路由
  *
  * @param {any} { context, query, params, pathName }
  */
-function pushRouter({ context, query, params, pathname }){
+function pushRouter({ context, query, params, pathname }) {
   if (context) {
-    const { dispatch,$route } = context.props;
-    dispatch(routerRedux.push({
-      ...$route,
-      pathname,
-      search:queryString.stringify(query),
-      params,
-    }));
+    const { dispatch, $route } = context.props;
+    dispatch(
+      routerRedux.push({
+        ...$route,
+        pathname,
+        search: queryString.stringify(query),
+        params,
+      })
+    );
   }
 }
-
 
 /**
  *生成项目pathname +具体路径的path
@@ -55,15 +57,12 @@ function pushRouter({ context, query, params, pathname }){
  * @param {*} afterDetailsPath
  * @returns
  */
-function generatePathName(afterDetailsPath){
-  return `${appConfig.appRootPath}${afterDetailsPath}`
+function generatePathName(afterDetailsPath) {
+  return `${appConfig.appRootPath}${afterDetailsPath}`;
 }
 
-
-export {
-  generatePathName,
-}
+export { generatePathName };
 export default {
   replaceRouter,
   pushRouter,
-}
+};

@@ -5,7 +5,7 @@
  * @Last Modified time: 2018-05-30 14:11:02
  */
 
-const  menuData = [
+const menuData = [
   {
     name: 'dashboard',
     icon: 'dashboard',
@@ -30,4 +30,4 @@ const  menuData = [
   },
 ];
 
-export default menuData
+export default menuData;

@@ -4,9 +4,7 @@
  * @Last Modified by: Rhymedys
  * @Last Modified time: 2018-08-03 11:52:17
  */
-import {queryByCurrentUser} from '../services/system'
-
-
+import { queryByCurrentUser } from '../services/system';
 
 export default {
   namespace: 'system',
@@ -23,30 +21,28 @@ export default {
   },
 
   effects: {
-
     /**
      * 获取当前用户的应用列表
      *
      * @param {*} payload
      * @param {*} {call,put}
      */
-    *fetchSystemListByCurrentUser({payload,cb},{call,put}){
-      const res  = yield call(queryByCurrentUser,payload)
+    *fetchSystemListByCurrentUser({ payload, cb }, { call, put }) {
+      const res = yield call(queryByCurrentUser, payload);
       yield put({
-        type:'save',
-        list:res && res.resultCode === 0 ? res.data.rows :[],
+        type: 'save',
+        list: res && res.resultCode === 0 ? res.data.rows : [],
         pagination: {
-          current: payload? Number(payload.page):1,
-          pageSize: payload? Number(payload.pageSize) : 10,
+          current: payload ? Number(payload.page) : 1,
+          pageSize: payload ? Number(payload.pageSize) : 10,
           total: res.data.results,
         },
-      })
-      if(cb) cb(res)
+      });
+      if (cb) cb(res);
     },
   },
 
   reducers: {
-
     /**
      * 保存列表
      *
@@ -54,15 +50,15 @@ export default {
      * @param {*} payload
      * @returns
      */
-    save(state,payload){
+    save(state, payload) {
       return {
         ...state,
-        list:payload.list,
-        pagination:{
+        list: payload.list,
+        pagination: {
           ...state.pagination,
           ...payload.pagination,
         },
-      }
+      };
     },
   },
 };

@@ -5,12 +5,12 @@
  * @Last Modified time: 2018-08-02 14:21:25
  */
 
- import userConfig from './userConfig'
- import exceptionConfig from './exceptionConfig'
- import systemConfig from './systemConfig'
+import userConfig from './userConfig';
+import exceptionConfig from './exceptionConfig';
+import systemConfig from './systemConfig';
 
- export default {
+export default {
   exceptionConfig,
   userConfig,
   systemConfig,
- }
+};

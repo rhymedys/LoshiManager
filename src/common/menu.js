@@ -1,5 +1,5 @@
 import { isUrl } from '../utils/utils';
-import {menuData} from '../config'
+import { menuData } from '../config';
 
 function formatter(data, parentPath = '/', parentAuthority) {
   return data.map(item => {

@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import dynamic from 'dva/dynamic';
 import pathToRegexp from 'path-to-regexp';
 import { getMenuData } from './menu';
-import {getRouter} from '../config'
+import { getRouter } from '../config';
 
 let routerDataCache;
 
@@ -69,7 +69,7 @@ function getFlatMenuData(menus) {
 }
 
 export const getRouterData = app => {
-  const routerConfig = getRouter(app,dynamicWrapper)
+  const routerConfig = getRouter(app, dynamicWrapper);
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());
 

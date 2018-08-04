@@ -6,9 +6,7 @@ import GlobalFooter from '../components/GlobalFooter';
 import styles from './UserLayout.less';
 import logo from '../assets/logo.svg';
 import { getRoutes } from '../utils/utils';
-import appConfig from '../config/app'
-
-
+import appConfig from '../config/app';
 
 const copyright = (
   <Fragment>
@@ -50,10 +48,14 @@ class UserLayout extends React.PureComponent {
                   exact={item.exact}
                 />
               ))}
-              <Redirect exact from={`${appConfig.appRootPath}user`} to={`${appConfig.appRootPath}user/login`} />
+              <Redirect
+                exact
+                from={`${appConfig.appRootPath}user`}
+                to={`${appConfig.appRootPath}user/login`}
+              />
             </Switch>
           </div>
-          <GlobalFooter  copyright={copyright} />
+          <GlobalFooter copyright={copyright} />
         </div>
       </DocumentTitle>
     );
