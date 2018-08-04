@@ -1,2 +1,2 @@
 # LoshiManager
-LoshiManager readme
+LoshiManager
