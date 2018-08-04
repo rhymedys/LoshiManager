@@ -2,11 +2,11 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-01 11:23:38
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-03 13:51:46
+ * @Last Modified time: 2018-08-04 22:19:16
  */
-import {stringify} from 'qs';
+import { stringify } from 'qs';
 import request from '../utils/request';
-import {addPagnationParams} from '../utils/utils'
+import { addPagnationParams } from '../utils/utils';
 
 /**
  * 创建应用
@@ -16,12 +16,11 @@ import {addPagnationParams} from '../utils/utils'
  * @returns
  */
 export async function createSystem(params) {
-  return request('system/create',{
-    method:'POST',
-    params,
-  })
+  return request('system/create', {
+    method: 'POST',
+    ...params,
+  });
 }
-
 
 /**
  * 更新应用
@@ -30,13 +29,12 @@ export async function createSystem(params) {
  * @param {*} params
  * @returns
  */
-export async function updateSystem(params){
-  return request('system/update',{
-    method:'POST',
-    params,
-  })
+export async function updateSystem(params) {
+  return request('system/update', {
+    method: 'POST',
+    ...params,
+  });
 }
-
 
 /**
  * 删除应用
@@ -45,8 +43,8 @@ export async function updateSystem(params){
  * @param {*} params
  * @returns
  */
-export async function deleteSystem(params){
-  return request(`system/delete?${stringify(params)}`)
+export async function deleteSystem(params) {
+  return request(`system/delete?${stringify(params)}`);
 }
 
 /**
@@ -56,6 +54,6 @@ export async function deleteSystem(params){
  * @param {*} params
  * @returns
  */
-export async function queryByCurrentUser(params){
-  return request(`system/queryByCurrentUser?${stringify(addPagnationParams(params))}`)
+export async function queryByCurrentUser(params) {
+  return request(`system/queryByCurrentUser?${stringify(addPagnationParams(params))}`);
 }

@@ -1,34 +1,34 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import pathToRegexp from 'path-to-regexp';
 import DocumentTitle from 'react-document-title';
-import { Layout, Icon, message } from 'antd';
-import { Route, Redirect, Switch, routerRedux } from 'dva/router';
+import { Layout, Icon } from 'antd';
+import { Route, Redirect, Switch } from 'dva/router';
 import { connect } from 'dva';
 import GlobalHeader from '../components/GlobalHeader';
 import GlobalFooter from '../components/GlobalFooter';
-import appConfig from '../config/app'
+import appConfig from '../config/app';
 import NotFound from '../routes/Exception/404';
 import logo from '../assets/logo.svg';
 import { getRoutes } from '../utils/utils';
 import Authorized from '../utils/Authorized';
 
-
-
 const { AuthorizedRoute, check } = Authorized;
 const { Content, Header, Footer } = Layout;
 const redirectData = [];
 
-class SystemLayout extends React.PureComponent{
+class SystemLayout extends React.PureComponent {
   static GobalHeaderTitle = (
-    <h3 style={{
-      marginBottom:'.2em',
-    }}
-    >{appConfig.title}
+    <h3
+      style={{
+        marginBottom: '.2em',
+      }}
+    >
+      {appConfig.title}
     </h3>
-  )
+  );
 
-  async componentDidMount(){
-   await this.props.dispatch({
+  async componentDidMount() {
+    await this.props.dispatch({
       type: 'user/fetchCurrent',
     });
   }
@@ -36,7 +36,7 @@ class SystemLayout extends React.PureComponent{
   getPageTitle() {
     const { routerData, location } = this.props;
     const { pathname } = location;
-    let title = Array.of(appConfig.title).join('')
+    let title = Array.of(appConfig.title).join('');
     let currRouterData = null;
     // match params path
     Object.keys(routerData).forEach(key => {
@@ -61,32 +61,24 @@ class SystemLayout extends React.PureComponent{
       urlParams.searchParams.delete('redirect');
       window.history.replaceState(null, 'redirect', urlParams.href);
     } else {
-      const { routerData,match } = this.props;
+      const { routerData, match } = this.props;
 
       // get the first authorized route path in routerData
-      const {path} = getRoutes(match.path,routerData).find(
-        item => check(item.authority, item.path) && item.path !== '/'
-      )||{};
-
+      const { path } =
+        getRoutes(match.path, routerData).find(
+          item => check(item.authority, item.path) && item.path !== '/'
+        ) || {};
 
       return path;
     }
     return redirect;
   };
 
-
-
-  render(){
-    const {
-      currentUser,
-      fetchingNotices,
-      notices,
-      routerData,
-      match,
-    } = this.props;
+  render() {
+    const { currentUser, fetchingNotices, notices, routerData, match } = this.props;
     const bashRedirect = this.getBashRedirect();
 
-    const layout=(
+    const layout = (
       <Layout>
         <Header style={{ padding: 0 }}>
           <GlobalHeader
@@ -107,7 +99,7 @@ class SystemLayout extends React.PureComponent{
           <Switch>
             {redirectData.map(item => (
               <Redirect key={item.from} exact from={item.from} to={item.to} />
-              ))}
+            ))}
             {getRoutes(match.path, routerData).map(item => (
               <AuthorizedRoute
                 key={item.key}
@@ -117,21 +109,20 @@ class SystemLayout extends React.PureComponent{
                 authority={item.authority}
                 redirectPath="/system/exception/403"
               />
-              ))}
+            ))}
             <Redirect exact from={`${appConfig.appRootPath}system/`} to={bashRedirect} />
             <Route render={NotFound} />
           </Switch>
         </Content>
         <Footer style={{ padding: 0 }}>
-          <GlobalFooter links={[{title:'LoshiManager'}]} copyright={<span>Copyright {<Icon type="copyright" />} rhymedys@gmail.com</span>} />
+          <GlobalFooter
+            links={[{ key: 'LoshiManager', title: 'LoshiManager' }]}
+            copyright={<span>Copyright {<Icon type="copyright" />} rhymedys@gmail.com</span>}
+          />
         </Footer>
       </Layout>
-    )
-    return (
-      <DocumentTitle  title={this.getPageTitle()}>
-        {layout}
-      </DocumentTitle>
-    )
+    );
+    return <DocumentTitle title={this.getPageTitle()}>{layout}</DocumentTitle>;
   }
 }
 
@@ -139,6 +130,4 @@ export default connect(({ user, global, loading }) => ({
   currentUser: user.currentUser,
   fetchingNotices: loading.effects['global/fetchNotices'],
   notices: global.notices,
-})) (SystemLayout)
-
-
+}))(SystemLayout);

@@ -68,9 +68,9 @@ export default class GlobalHeader extends PureComponent {
       onMenuClick,
       onNoticeClear,
       title,
-      showCollapsed  = true,
+      showCollapsed = true,
       showHeaderSearch = true,
-      showTitle=false
+      showTitle = false,
     } = this.props;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
@@ -95,23 +95,19 @@ export default class GlobalHeader extends PureComponent {
           </Link>,
           <Divider type="vertical" key="line" />,
         ]}
-        {
-          showCollapsed && (
-            <Icon
+        {showCollapsed && (
+          <Icon
             className={styles.trigger}
             type={collapsed ? 'menu-unfold' : 'menu-fold'}
             onClick={this.toggle}
           />
-          )
-        }
-        {
-          showTitle && (
-            <div to="/" className={styles.logo} key="logo">
-              <img src={logo} alt="logo" width="32" />
-              {title}
-           </div>
-          )
-        }
+        )}
+        {showTitle && (
+          <div to="/" className={styles.logo} key="logo">
+            <img src={logo} alt="logo" width="32" />
+            {title}
+          </div>
+        )}
         <div className={styles.right}>
           {showHeaderSearch && (
             <HeaderSearch
@@ -124,7 +120,7 @@ export default class GlobalHeader extends PureComponent {
               onPressEnter={value => {
                 console.log('enter', value); // eslint-disable-line
               }}
-              />
+            />
           )}
           <Tooltip title="使用文档">
             <a
@@ -167,9 +163,11 @@ export default class GlobalHeader extends PureComponent {
             />
           </NoticeIcon>
           {currentUser.name ? (
-            <Dropdown overlay={menu}>
+            <Dropdown overlay={menu} getPopupContainer={triggerNode => triggerNode}>
               <span className={`${styles.action} ${styles.account}`}>
-                <Avatar size="small" className={styles.avatar} src={currentUser.avatar}>{currentUser.avatar?null:currentUser.name}</Avatar>
+                <Avatar size="small" className={styles.avatar} src={currentUser.avatar}>
+                  {currentUser.avatar ? null : currentUser.name}
+                </Avatar>
                 <span className={styles.name}>{currentUser.name}</span>
               </span>
             </Dropdown>
