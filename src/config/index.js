@@ -5,13 +5,8 @@
  * @Last Modified time: 2018-06-27 09:43:50
  */
 
-import menuData from './menu'
-import getRouter,{routePagnationListConfigs} from './router'
-import appConfig from './app'
+import menuData from './menu';
+import getRouter, { routePagnationListConfigs } from './router';
+import appConfig from './app';
 
-export {
-  menuData,
-  getRouter,
-  appConfig,
-  routePagnationListConfigs,
-}
+export { menuData, getRouter, appConfig, routePagnationListConfigs };

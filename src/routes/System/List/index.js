@@ -7,85 +7,83 @@
 
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
-import {Card,message, Button} from'antd'
-import List from './List'
-import {BaseComponent} from '../../Base'
-import {deleteSystem} from '../../../services/system'
-import styles from './styles.less'
+import { Card, message, Button } from 'antd';
+import List from './List';
+import { BaseComponent } from '../../Base';
+import { deleteSystem } from '../../../services/system';
+import styles from './styles.less';
 
-
-class Index extends Component{
-
-  componentDidMount(){
-    this.fetchSystemListByCurrentUser(this.props.getRouteQuery())
+class Index extends Component {
+  componentDidMount() {
+    this.fetchSystemListByCurrentUser(this.props.getRouteQuery());
   }
-
 
   /**
    * 请求当前用户应用列表
    *
    * @memberof Index
    */
-  fetchSystemListByCurrentUser=(payload)=>{
+  fetchSystemListByCurrentUser = payload => {
     this.props.dispatch({
-      type:'system/fetchSystemListByCurrentUser',
+      type: 'system/fetchSystemListByCurrentUser',
       payload,
-    })
-  }
-
+    });
+  };
 
   /**
    *添加应用
    *
    * @memberof Index
    */
-  addApplication=()=>{
+  addApplication = () => {
     this.props.pushRouter({
-      context:this,
-      pathname:'create',
-    })
-  }
+      context: this,
+      pathname: 'create',
+    });
+  };
 
-  render(){
-    const listPros= {
-      pagination:this.props.pagination,
-      dataSource:this.props.appList,
-      loading:this.props.loading,
-      location:this.props.$route,
-      onPageChange:(res)=>{
+  render() {
+    const listPros = {
+      pagination: this.props.pagination,
+      dataSource: this.props.appList,
+      loading: this.props.loading,
+      location: this.props.$route,
+      onPageChange: res => {
         const params = {
-          page:res.current,
-          pageSize:res.pageSize,
-        }
-        this.props.replaceRouter(params)
-        this.fetchSystemListByCurrentUser(params)
+          page: res.current,
+          pageSize: res.pageSize,
+        };
+        this.props.replaceRouter(params);
+        this.fetchSystemListByCurrentUser(params);
       },
-      deleteApplication:async ({appId})=>{
-        const res =await deleteSystem({appId})
-        if(res.resultCode===0) {
-          message.success(res.resultDesc)
-          this.fetchSystemListByCurrentUser(this.props.getRouteQuery())
+      deleteApplication: async ({ appId }) => {
+        const res = await deleteSystem({ appId });
+        if (res.resultCode === 0) {
+          message.success(res.resultDesc);
+          this.fetchSystemListByCurrentUser(this.props.getRouteQuery());
         }
       },
-    }
+    };
     return (
       <Fragment>
-        <Card style={{
-          height:'100%',
-        }}
+        <Card
+          style={{
+            height: '100%',
+          }}
         >
-          <Button type="primary" className={styles.addButton}  onClick={this.addApplication}>添加</Button>
+          <Button type="primary" className={styles.addButton} onClick={this.addApplication}>
+            添加
+          </Button>
           <List {...listPros} />
         </Card>
       </Fragment>
-    )
+    );
   }
 }
 
-
-export default connect(({system,loading,routing})=>({
-  appList:system.list,
-  pagination:system.pagination,
-  loading:loading.effects['system/fetchSystemListByCurrentUser'],
-  $route:routing.location,
-}))(BaseComponent(Index))
+export default connect(({ system, loading, routing }) => ({
+  appList: system.list,
+  pagination: system.pagination,
+  loading: loading.effects['system/fetchSystemListByCurrentUser'],
+  $route: routing.location,
+}))(BaseComponent(Index));

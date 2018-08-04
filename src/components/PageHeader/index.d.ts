@@ -15,7 +15,7 @@ export interface IPageHeaderProps {
   tabBarExtraContent?: React.ReactNode;
   linkElement?: React.ReactNode;
   style?: React.CSSProperties;
-  showBreadcrumb?:boolean
+  showBreadcrumb?: boolean;
 }
 
 export default class PageHeader extends React.Component<IPageHeaderProps, any> {}

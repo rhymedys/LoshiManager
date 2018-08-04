@@ -2,13 +2,13 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-06-03 14:49:39
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-07-30 10:14:16
+ * @Last Modified time: 2018-08-04 22:47:42
  */
-import  queryString from 'qs'
-import {generatePathName} from '../utils/router'
-import {routePagnationListConfigs} from '../config'
+import queryString from 'qs';
+import { generatePathName } from '../utils/router';
+import { routePagnationListConfigs } from '../config';
 
-const defaultState ={
+const defaultState = {
   pagination: {
     showSizeChanger: true,
     showQuickJumper: true,
@@ -17,52 +17,55 @@ const defaultState ={
     total: null,
   },
   dataSource: [],
-  accoutData:[],
-}
+  accoutData: [],
+};
 
 // 历史记录
-let currentHistoryLocation = null
+let currentHistoryLocation = null;
 
 export default {
   namespace: 'pagnationList',
-  state: Object.assign({},defaultState),
+  state: Object.assign({}, defaultState),
   subscriptions: {
     /**
      * @description 初始化
      * @param {any} {dispatch,history}
      */
-    setup({dispatch,history}) {
+    setup({ dispatch, history }) {
       // 监听location变化
       history.listen(location => {
-      if(!currentHistoryLocation ||(currentHistoryLocation && currentHistoryLocation !==location)){
+        if (
+          !currentHistoryLocation ||
+          (currentHistoryLocation && currentHistoryLocation !== location)
+        ) {
           // 防止第二页的时候清空第一页的数据
-          if(currentHistoryLocation && currentHistoryLocation.pathname!==location.pathname){
+          if (currentHistoryLocation && currentHistoryLocation.pathname !== location.pathname) {
             dispatch({
-              type:'resetDefaultState',
-            })
+              type: 'resetDefaultState',
+            });
           }
 
-          currentHistoryLocation=location
+          currentHistoryLocation = location;
 
-          const {pathname,search}=location
-          const payload= queryString.parse(search.replace('?',''))
+          const { pathname, search } = location;
+          const payload = queryString.parse(search.replace('?', ''));
 
           // 分发action事件
-          const dispatchAction = ({type='getList',extraPayload,api})=>{
+          const dispatchAction = ({ type = 'getList', extraPayload, api }) => {
             dispatch({
               type,
-              payload:Object.assign({},payload,extraPayload),
+              payload: Object.assign({}, payload, extraPayload),
               api,
-              stateLocationKey:location.key,
-            })
-          }
+              stateLocationKey: location.key,
+            });
+          };
 
           // 根据pathname 分发业务
-          for(const [k,v] of Object.entries(routePagnationListConfigs)){
-            if(pathname === generatePathName(k.substring(1))){
+          for (const [k, v] of Object.entries(routePagnationListConfigs)) {
+            if (pathname === generatePathName(k.substring(1))) {
               dispatchAction({
-                api:v,
-              })
+                api: v,
+              });
               break;
             }
           }
@@ -77,9 +80,9 @@ export default {
      * @param {*} { payload , stateLocationKey,api}
      * @param {*} { call,put }
      */
-    *getList({ payload , stateLocationKey,api},{ call,put }){
-      if(api){
-        const res = yield call(api,payload);
+    *getList({ payload, stateLocationKey, api }, { call, put }) {
+      if (api) {
+        const res = yield call(api, payload);
         if (res.resultCode === 0) {
           yield put({
             type: 'dispatchPagnationListDataSource',
@@ -96,7 +99,7 @@ export default {
      * @param {any} payload
      * @param {any} {put}
      */
-    *dispatchPagnationListDataSource(payload,{put}){
+    *dispatchPagnationListDataSource(payload, { put }) {
       yield put({
         type: 'setPagnationListDataSource',
         dataSource: payload.rows || null,
@@ -105,19 +108,18 @@ export default {
           pageSize: Number(payload.pageSize) || 10,
           total: payload.results,
         },
-        stateLocationKey:payload.stateLocationKey,
+        stateLocationKey: payload.stateLocationKey,
       });
     },
   },
 
   reducers: {
-
     /**
      * @description 重置状态
      * @returns
      */
-    resetDefaultState(){
-      return defaultState
+    resetDefaultState() {
+      return defaultState;
     },
 
     /**
@@ -126,8 +128,8 @@ export default {
      * @param {any} { dataSource, pagination }
      * @returns
      */
-    setPagnationListDataSource(state, { dataSource, pagination ,stateLocationKey}){
-      if(stateLocationKey  === currentHistoryLocation.key){
+    setPagnationListDataSource(state, { dataSource, pagination, stateLocationKey }) {
+      if (stateLocationKey === currentHistoryLocation.key) {
         return {
           ...state,
           dataSource,
@@ -137,9 +139,8 @@ export default {
           },
         };
       }
-      return state
+      return state;
     },
-
 
     /**
      *修改分页的某个数据
@@ -148,22 +149,19 @@ export default {
      * @param {*} payload
      * @returns
      */
-    changePagnationListDataSource(state={},payload){
-      console.log('changePagnationListDataSource payload',payload,'state',state)
-      let {dataSource}=state
-      if(payload){
-        if(payload.index !== undefined){
-          dataSource[payload.index]=payload.data
-        } else if (Object.prototype.toString.call(payload.data)==='[object Array]') {
-          dataSource=payload.data
+    changePagnationListDataSource(state = {}, payload) {
+      let { dataSource } = state;
+      if (payload) {
+        if (payload.index !== undefined) {
+          dataSource[payload.index] = payload.data;
+        } else if (Object.prototype.toString.call(payload.data) === '[object Array]') {
+          dataSource = payload.data;
         }
       }
       return {
         ...state,
         dataSource,
-      }
-
+      };
     },
   },
 };
-

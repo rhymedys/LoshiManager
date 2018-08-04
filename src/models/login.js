@@ -2,7 +2,7 @@ import { routerRedux } from 'dva/router';
 import { fakeAccountLogin } from '../services/login';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
-import appConfig from '../config/app'
+import appConfig from '../config/app';
 
 export default {
   namespace: 'login',
@@ -17,7 +17,7 @@ export default {
       yield put({
         type: 'changeLoginStatus',
         payload: {
-          status:response.resultCode === 0,
+          status: response.resultCode === 0,
         },
       });
       // Login successfully

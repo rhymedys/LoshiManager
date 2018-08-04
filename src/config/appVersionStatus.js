@@ -5,11 +5,11 @@
  * @Last Modified time: 2018-06-21 15:25:11
  */
 
-const normal = 'NORMAL'
-const draft = 'DRAFT'
-const forbidden = 'FORBIDDEN'
+const normal = 'NORMAL';
+const draft = 'DRAFT';
+const forbidden = 'FORBIDDEN';
 
-const statusType=[
+const statusType = [
   {
     value: '',
     label: '全部',
@@ -26,14 +26,7 @@ const statusType=[
     value: forbidden,
     label: '禁用',
   },
-]
+];
 
-
-export {
-  normal,
-  draft,
-  forbidden,
-}
-export default statusType
-
-
+export { normal, draft, forbidden };
+export default statusType;

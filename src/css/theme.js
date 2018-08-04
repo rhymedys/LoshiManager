@@ -1,4 +1,4 @@
-  /*
+/*
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2017-05-15 23:43:11
  * @Last Modified by: Rhymedys
@@ -18,4 +18,4 @@ module.exports = {
     grass: '#d6fbb5',
     sky: '#c1e0fc',
   },
-}
+};

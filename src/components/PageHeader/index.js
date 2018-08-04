@@ -25,7 +25,7 @@ export default class PageHeader extends PureComponent {
     params: PropTypes.object,
     location: PropTypes.object,
     breadcrumbNameMap: PropTypes.object,
-    showBreadcrumb:PropTypes.bool,
+    showBreadcrumb: PropTypes.bool,
   };
 
   state = {

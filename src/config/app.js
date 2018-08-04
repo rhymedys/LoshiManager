@@ -5,8 +5,7 @@
  * @Last Modified time: 2018-08-02 10:30:06
  */
 
- export default {
-  appRootPath: '/admin/',// app的根明
-  title:'Loshi Manager',
- }
-
+export default {
+  appRootPath: '/admin/', // app的根明
+  title: 'Loshi Manager',
+};
