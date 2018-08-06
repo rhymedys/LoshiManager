@@ -2,10 +2,11 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 11:32:57
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-04 22:25:42
+ * @Last Modified time: 2018-08-06 13:52:17
  */
 
 import React from 'react';
+import { Link } from 'dva/router';
 import { Table, Popconfirm } from 'antd';
 import { BaseListComponents } from '../../Base';
 
@@ -123,9 +124,9 @@ class List extends React.Component {
         width: 150,
         render: (text, record) => {
           return [
-            <a key="setting" style={operationStyles}>
-              设置
-            </a>,
+            <Link key="change" to="change" style={operationStyles}>
+              修改
+            </Link>,
             <Popconfirm
               key="delete"
               title="是否确认删除该应用?"

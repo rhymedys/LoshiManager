@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 16:52:18
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-04 22:37:43
+ * @Last Modified time: 2018-08-06 14:11:53
  */
 
 import React, { Fragment, PureComponent } from 'react';
@@ -43,7 +43,7 @@ class Index extends PureComponent {
     const { getFieldDecorator } = this.props.form;
     return this.state.isStatisiPages ? (
       <FormItem {...formItemLayoutWithOutLabel}>
-        {getFieldDecorator('slowPageTime', { valuePropName: 'slowPageTime' })(
+        {getFieldDecorator('slowPageTime', { valuePropName: 'value' })(
           <InputNumber
             style={{ width: '100%' }}
             step={0.1}
@@ -59,7 +59,7 @@ class Index extends PureComponent {
     const { getFieldDecorator } = this.props.form;
     return this.state.isStatisiResource ? (
       <FormItem {...formItemLayoutWithOutLabel}>
-        {getFieldDecorator('slowJsTime', { valuePropName: 'slowJsTime' })(
+        {getFieldDecorator('slowJsTime', { valuePropName: 'value' })(
           <InputNumber
             style={{ width: '100%' }}
             step={0.1}
@@ -74,7 +74,7 @@ class Index extends PureComponent {
     const { getFieldDecorator } = this.props.form;
     return this.state.isStatisiResource ? (
       <FormItem {...formItemLayoutWithOutLabel}>
-        {getFieldDecorator('slowCssTime', { valuePropName: 'slowCssTime' })(
+        {getFieldDecorator('slowCssTime', { valuePropName: 'value' })(
           <InputNumber
             style={{ width: '100%' }}
             step={0.1}
@@ -90,7 +90,7 @@ class Index extends PureComponent {
     const { getFieldDecorator } = this.props.form;
     return this.state.isStatisiResource ? (
       <FormItem {...formItemLayoutWithOutLabel}>
-        {getFieldDecorator('slowImgTime', { valuePropName: 'slowImgTime' })(
+        {getFieldDecorator('slowImgTime', { valuePropName: 'value' })(
           <InputNumber
             style={{ width: '100%' }}
             step={0.1}
@@ -113,7 +113,9 @@ class Index extends PureComponent {
         onOk: async () => {
           await createSystem({
             body: values,
-          }).then(window.history.back);
+          }).then(() => {
+            window.history.back();
+          });
         },
       });
     });

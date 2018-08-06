@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-01 11:23:38
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-04 22:19:16
+ * @Last Modified time: 2018-08-06 13:39:36
  */
 import { stringify } from 'qs';
 import request from '../utils/request';
@@ -56,4 +56,15 @@ export async function deleteSystem(params) {
  */
 export async function queryByCurrentUser(params) {
   return request(`system/queryByCurrentUser?${stringify(addPagnationParams(params))}`);
+}
+
+/**
+ * 根据AppId查询应用设置
+ *
+ * @export
+ * @param {*} params
+ * @returns
+ */
+export async function queryByAppId(params) {
+  return request(`system/queryByAppId?${stringify(params)}`);
 }
