@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 16:52:18
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-06 14:13:11
+ * @Last Modified time: 2018-08-06 14:24:14
  */
 
 import React, { Fragment, PureComponent } from 'react';
@@ -100,6 +100,7 @@ class Index extends PureComponent {
       </FormItem>
     ) : null;
   };
+
   generateSlowCssTimeTimeTimeInput = () => {
     const { getFieldDecorator } = this.props.form;
     return this.state.isStatisiResource ? (

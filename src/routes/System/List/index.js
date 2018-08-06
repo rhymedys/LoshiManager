@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 10:55:35
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-03 16:52:30
+ * @Last Modified time: 2018-08-06 14:39:19
  */
 
 import React, { Component, Fragment } from 'react';
@@ -12,6 +12,7 @@ import List from './List';
 import { BaseComponent } from '../../Base';
 import { deleteSystem } from '../../../services/system';
 import styles from './styles.less';
+import appConfig from '../../../config/app';
 
 class Index extends Component {
   componentDidMount() {
@@ -61,6 +62,15 @@ class Index extends Component {
         if (res.resultCode === 0) {
           message.success(res.resultDesc);
           this.fetchSystemListByCurrentUser(this.props.getRouteQuery());
+        }
+      },
+      seletCurrentAppAndGoDetail: ({ appId }) => {
+        if (appId) {
+          sessionStorage.setItem(appConfig.selectedAppKey, appId);
+          this.props.pushRouter({
+            context: this,
+            pathname: '/admin/dashboard',
+          });
         }
       },
     };

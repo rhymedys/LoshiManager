@@ -194,6 +194,11 @@ class BasicLayout extends React.PureComponent {
       match,
       location,
     } = this.props;
+    const rightLayoutStyle = () => {
+      if (!this.state.isMobile) {
+        return { marginLeft: collapsed ? 80 : 256 };
+      }
+    };
     const bashRedirect = this.getBashRedirect();
     const layout = (
       <Layout>
@@ -210,7 +215,7 @@ class BasicLayout extends React.PureComponent {
           isMobile={this.state.isMobile}
           onCollapse={this.handleMenuCollapse}
         />
-        <Layout>
+        <Layout style={rightLayoutStyle()}>
           <Header style={{ padding: 0 }}>
             <GlobalHeader
               logo={logo}

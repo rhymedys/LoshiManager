@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 11:32:57
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-06 13:52:17
+ * @Last Modified time: 2018-08-06 14:38:49
  */
 
 import React from 'react';
@@ -29,6 +29,9 @@ class List extends React.Component {
         key: 'systemName',
         fixed: 'left',
         width: 150,
+        render: (text, record) => {
+          return <a onClick={this.props.seletCurrentAppAndGoDetail.bind(null, record)}>{text}</a>;
+        },
       },
       {
         title: '应用链接',
@@ -124,7 +127,7 @@ class List extends React.Component {
         width: 150,
         render: (text, record) => {
           return [
-            <Link key="change" to="change" style={operationStyles}>
+            <Link key="change" to={`change?appId=${record.appId}`} style={operationStyles}>
               修改
             </Link>,
             <Popconfirm
@@ -134,7 +137,11 @@ class List extends React.Component {
             >
               <a style={operationStyles}>删除</a>
             </Popconfirm>,
-            <a key="details" style={operationStyles}>
+            <a
+              key="details"
+              style={operationStyles}
+              onClick={this.props.seletCurrentAppAndGoDetail.bind(null, record)}
+            >
               详情
             </a>,
           ];
