@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 10:55:35
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-06 14:39:19
+ * @Last Modified time: 2018-08-07 16:43:12
  */
 
 import React, { Component, Fragment } from 'react';
@@ -12,7 +12,7 @@ import List from './List';
 import { BaseComponent } from '../../Base';
 import { deleteSystem } from '../../../services/system';
 import styles from './styles.less';
-import appConfig from '../../../config/app';
+import { setSelectedAppId } from '../../../utils/selectedAppId';
 
 class Index extends Component {
   componentDidMount() {
@@ -66,7 +66,7 @@ class Index extends Component {
       },
       seletCurrentAppAndGoDetail: ({ appId }) => {
         if (appId) {
-          sessionStorage.setItem(appConfig.selectedAppKey, appId);
+          setSelectedAppId(appId);
           this.props.pushRouter({
             context: this,
             pathname: '/admin/dashboard',

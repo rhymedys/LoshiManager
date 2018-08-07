@@ -3,20 +3,35 @@ import { format, delay } from 'roadhog-api-doc';
 import login from './mock/login';
 import system from './mock/system';
 import user from './mock/user';
+import pages from './mock/pages';
+import environment from './mock/environment';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const proxy = {
+  // ----------------------------login--------------------------------------
   'POST login': login.login,
 
+  // ----------------------------system--------------------------------------
   'GET system/delete': system.delete,
   'GET system/queryByCurrentUser': system.queryByCurrentUser,
   'GET system/queryByAppId': system.queryByAppId,
-  'GET user/query': user.query,
   'POST system/update': system.update,
   'POST system/create': system.create,
+
+  // ----------------------------user--------------------------------------
+  'GET user/query': user.query,
+
+  // ----------------------------pages--------------------------------------
+  'GET pages/queryPagesByUrl': pages.queryPagesByUrl,
+  'GET pages/queryAllPagesUrlByAppId': pages.queryAllPagesUrlByAppId,
+
+  // ----------------------------environment--------------------------------------
+  'GET environment/queryUrlEnvironmentByType': (req, res) => {
+    res.send(environment[`queryUrlEnvironmentByType${req.type}`]);
+  },
 };
 
 const res = {};

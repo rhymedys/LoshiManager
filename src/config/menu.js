@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-05-30 13:54:32
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-06 10:29:15
+ * @Last Modified time: 2018-08-07 16:39:22
  */
 
 const menuData = [
@@ -15,6 +15,18 @@ const menuData = [
     name: '受访页面',
     icon: 'dashboard',
     path: 'admin/visit',
+    children: [
+      {
+        path: 'list',
+        hideInMenu: true,
+        hideInBreadcrumb: true,
+      },
+      {
+        path: 'detail',
+        hideInMenu: true,
+        hideInBreadcrumb: true,
+      },
+    ],
   },
   {
     name: '脚本错误',

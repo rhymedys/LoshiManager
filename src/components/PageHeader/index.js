@@ -105,7 +105,7 @@ export default class PageHeader extends PureComponent {
         {createElement(
           linkElement,
           {
-            [linkElement === 'a' ? 'href' : 'to']: '/',
+            [linkElement === 'a' ? 'href' : 'to']: 'dashboard',
           },
           '首页'
         )}

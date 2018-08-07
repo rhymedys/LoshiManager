@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 11:32:57
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-06 14:38:49
+ * @Last Modified time: 2018-08-06 15:51:28
  */
 
 import React from 'react';
@@ -24,7 +24,7 @@ class List extends React.Component {
 
     const columns = [
       {
-        title: '应用名称',
+        title: '名称',
         dataIndex: 'systemName',
         key: 'systemName',
         fixed: 'left',
@@ -34,16 +34,9 @@ class List extends React.Component {
         },
       },
       {
-        title: '应用链接',
+        title: '域名',
         dataIndex: 'systemDomain',
         key: 'systemDomain',
-        fixed: 'left',
-        width: 200,
-      },
-      {
-        title: 'appId',
-        dataIndex: 'appId',
-        key: 'appId',
         fixed: 'left',
         width: 200,
       },
@@ -142,7 +135,7 @@ class List extends React.Component {
               style={operationStyles}
               onClick={this.props.seletCurrentAppAndGoDetail.bind(null, record)}
             >
-              详情
+              报告
             </a>,
           ];
         },

@@ -164,3 +164,13 @@ export const addPagnationParams = data => {
 
   return res;
 };
+
+export const toFixed = (val, type = false) => {
+  let res = parseFloat(val);
+  if (type) {
+    res /= 1000;
+    return res > 0 ? `${res.toFixed(3)} s` : res.toFixed(2);
+  } else {
+    return `${res.toFixed(2)} ms`;
+  }
+};

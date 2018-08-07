@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Layout, message } from 'antd';
+import { Layout, message, Icon } from 'antd';
 import DocumentTitle from 'react-document-title';
 import { connect } from 'dva';
 import { Route, Redirect, Switch, routerRedux } from 'dva/router';
@@ -177,13 +177,7 @@ class BasicLayout extends React.PureComponent {
       });
     }
   };
-  handleNoticeVisibleChange = visible => {
-    if (visible) {
-      this.props.dispatch({
-        type: 'global/fetchNotices',
-      });
-    }
-  };
+
   render() {
     const {
       currentUser,
@@ -227,7 +221,6 @@ class BasicLayout extends React.PureComponent {
               onNoticeClear={this.handleNoticeClear}
               onCollapse={this.handleMenuCollapse}
               onMenuClick={this.handleMenuClick}
-              onNoticeVisibleChange={this.handleNoticeVisibleChange}
             />
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
@@ -249,9 +242,13 @@ class BasicLayout extends React.PureComponent {
               <Route render={NotFound} />
             </Switch>
           </Content>
+
           {/* 页脚 */}
           <Footer style={{ padding: 0 }}>
-            <GlobalFooter />
+            <GlobalFooter
+              links={[{ key: 'LoshiManager', title: 'LoshiManager' }]}
+              copyright={<span>Copyright {<Icon type="copyright" />} rhymedys@gmail.com</span>}
+            />
           </Footer>
         </Layout>
       </Layout>

@@ -2,11 +2,8 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-06-03 14:49:39
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-04 22:47:42
+ * @Last Modified time: 2018-08-07 15:07:20
  */
-import queryString from 'qs';
-import { generatePathName } from '../utils/router';
-import { routePagnationListConfigs } from '../config';
 
 const defaultState = {
   pagination: {
@@ -17,78 +14,34 @@ const defaultState = {
     total: null,
   },
   dataSource: [],
-  accoutData: [],
 };
-
-// 历史记录
-let currentHistoryLocation = null;
 
 export default {
   namespace: 'pagnationList',
   state: Object.assign({}, defaultState),
-  subscriptions: {
-    /**
-     * @description 初始化
-     * @param {any} {dispatch,history}
-     */
-    setup({ dispatch, history }) {
-      // 监听location变化
-      history.listen(location => {
-        if (
-          !currentHistoryLocation ||
-          (currentHistoryLocation && currentHistoryLocation !== location)
-        ) {
-          // 防止第二页的时候清空第一页的数据
-          if (currentHistoryLocation && currentHistoryLocation.pathname !== location.pathname) {
-            dispatch({
-              type: 'resetDefaultState',
-            });
-          }
-
-          currentHistoryLocation = location;
-
-          const { pathname, search } = location;
-          const payload = queryString.parse(search.replace('?', ''));
-
-          // 分发action事件
-          const dispatchAction = ({ type = 'getList', extraPayload, api }) => {
-            dispatch({
-              type,
-              payload: Object.assign({}, payload, extraPayload),
-              api,
-              stateLocationKey: location.key,
-            });
-          };
-
-          // 根据pathname 分发业务
-          for (const [k, v] of Object.entries(routePagnationListConfigs)) {
-            if (pathname === generatePathName(k.substring(1))) {
-              dispatchAction({
-                api: v,
-              });
-              break;
-            }
-          }
-        }
-      });
-    },
-  },
   effects: {
     /**
      *请求列表数据
      *
-     * @param {*} { payload , stateLocationKey,api}
+     * @param {*} { payload ,api}
      * @param {*} { call,put }
      */
-    *getList({ payload, stateLocationKey, api }, { call, put }) {
+    *getList({ apiParams, api, resetState }, { call, put }) {
+      if (resetState) yield put({ type: 'resetDefaultState' });
+
       if (api) {
-        const res = yield call(api, payload);
-        if (res.resultCode === 0) {
+        const res = yield call(api, apiParams);
+        if (res && res.resultCode === 0) {
           yield put({
             type: 'dispatchPagnationListDataSource',
-            ...payload,
-            ...res,
-            stateLocationKey,
+            ...apiParams,
+            ...res.data,
+          });
+        } else {
+          yield put({
+            type: 'dispatchPagnationListDataSource',
+            ...apiParams,
+            rows: [],
           });
         }
       }
@@ -108,7 +61,6 @@ export default {
           pageSize: Number(payload.pageSize) || 10,
           total: payload.results,
         },
-        stateLocationKey: payload.stateLocationKey,
       });
     },
   },
@@ -128,35 +80,29 @@ export default {
      * @param {any} { dataSource, pagination }
      * @returns
      */
-    setPagnationListDataSource(state, { dataSource, pagination, stateLocationKey }) {
-      if (stateLocationKey === currentHistoryLocation.key) {
-        return {
-          ...state,
-          dataSource,
-          pagination: {
-            ...state.pagination,
-            ...pagination,
-          },
-        };
-      }
-      return state;
+    setPagnationListDataSource(state, { dataSource, pagination }) {
+      return {
+        ...state,
+        dataSource,
+        pagination: {
+          ...state.pagination,
+          ...pagination,
+        },
+      };
     },
 
     /**
      *修改分页的某个数据
      *
      * @param {*} state
-     * @param {*} payload
+     * @param {*} cb
      * @returns
      */
-    changePagnationListDataSource(state = {}, payload) {
+    changePagnationListDataSource(state, cb) {
       let { dataSource } = state;
-      if (payload) {
-        if (payload.index !== undefined) {
-          dataSource[payload.index] = payload.data;
-        } else if (Object.prototype.toString.call(payload.data) === '[object Array]') {
-          dataSource = payload.data;
-        }
+      if (cb && Object.prototype.toString.call(cb) === '[object Function]') {
+        const res = cb(dataSource);
+        if (res) dataSource = res;
       }
       return {
         ...state,
