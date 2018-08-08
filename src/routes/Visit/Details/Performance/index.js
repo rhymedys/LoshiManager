@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-08 10:37:52
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-08 17:06:55
+ * @Last Modified time: 2018-08-08 17:19:05
  */
 import React, { PureComponent, Fragment } from 'react';
 import { Card, Row, Col, Icon } from 'antd';
