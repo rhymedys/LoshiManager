@@ -2,18 +2,64 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 11:46:28
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-07 11:51:17
+ * @Last Modified time: 2018-08-08 10:35:49
  */
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
+import { Route, Switch, Redirect } from 'dva/router';
 import { connect } from 'dva';
 import { BaseComponent } from '../../Base';
+import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
+import { getRoutes } from '../../../utils/utils';
+
+const tabList = [
+  {
+    key: 'performance',
+    tab: '性能详情',
+  },
+  {
+    key: 'ajax',
+    tab: 'ajax调用',
+  },
+  {
+    key: 'page',
+    tab: '页面加载',
+  },
+  {
+    key: 'resource',
+    tab: '资源加载',
+  },
+];
 
 class Index extends PureComponent {
+  handleTabChange = key => {
+    const { match } = this.props;
+    this.props.pushRouter({
+      query: this.props.getRouteQuery(),
+      pathname: `${match.url}/${key}`,
+    });
+  };
+
   render() {
+    const { match, routerData, location } = this.props;
+    const routes = getRoutes(match.path, routerData);
     return (
-      <Fragment>
-        <div>Details</div>
-      </Fragment>
+      <PageHeaderLayout
+        tabList={tabList}
+        tabActiveKey={location.pathname.replace(`${match.path}/`, '')}
+        onTabChange={this.handleTabChange}
+      >
+        <Switch>
+          {routes.map(item => (
+            <Route key={item.key} path={item.path} component={item.component} exact={item.exact} />
+          ))}
+
+          <Redirect
+            exact
+            from={match.path}
+            to={`${match.url}/${tabList[0].key}${location.search}`}
+          />
+        </Switch>
+      </PageHeaderLayout>
     );
   }
 }

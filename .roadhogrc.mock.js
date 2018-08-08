@@ -27,11 +27,13 @@ const proxy = {
   // ----------------------------pages--------------------------------------
   'GET pages/queryPagesByUrl': pages.queryPagesByUrl,
   'GET pages/queryAllPagesUrlByAppId': pages.queryAllPagesUrlByAppId,
+  'GET pages/queryPagesSimpleInfoByUrlAndTime': pages.queryPagesSimpleInfoByUrlAndTime,
 
   // ----------------------------environment--------------------------------------
-  'GET environment/queryUrlEnvironmentByType': (req, res) => {
-    res.send(environment[`queryUrlEnvironmentByType${req.type}`]);
-  },
+  // 'GET environment/queryUrlEnvironmentByType': (req, res) => {
+  //   res.send(environment[`queryUrlEnvironmentByType${req.type}`]);
+  // },
+  'GET environment/queryUrlEnvironmentByType': environment.queryUrlEnvironmentByType,
 };
 
 const res = {};

@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 11:30:33
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-07 11:30:55
+ * @Last Modified time: 2018-08-08 13:55:00
  */
 
 export default {
@@ -502,6 +502,24 @@ export default {
         },
       ],
       results: 12,
+    },
+  },
+  queryPagesSimpleInfoByUrlAndTime: {
+    resultCode: 0,
+    resultDesc: 'success',
+    data: {
+      loadTime: 1169.5,
+      dnsTime: 0,
+      tcpTime: 0.25,
+      domTime: 920.9167,
+      resourceTime: 0,
+      whiteTime: 14.25,
+      redirectTime: 0,
+      unloadTime: 0.4167,
+      requestTime: 12.9167,
+      analysisDomTime: 228.1667,
+      readyTime: 8.9167,
+      count: 12,
     },
   },
 };

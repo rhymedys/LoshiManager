@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 11:39:35
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-07 15:08:05
+ * @Last Modified time: 2018-08-08 13:58:26
  */
 
 import { stringify } from 'qs';
@@ -18,6 +18,17 @@ import { addPagnationParams } from '../utils/utils';
  */
 export async function queryPagesByUrl(params) {
   return request(`pages/queryPagesByUrl?${stringify(addPagnationParams(params))}`);
+}
+
+/**
+ * 通过url查询简要情况
+ *
+ * @export
+ * @param {*} params
+ * @returns
+ */
+export async function queryPagesSimpleInfoByUrlAndTime(params) {
+  return request(`pages/queryPagesSimpleInfoByUrlAndTime?${stringify(params)}`);
 }
 
 /**
