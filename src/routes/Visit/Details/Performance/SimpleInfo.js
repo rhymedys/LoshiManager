@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-09 16:12:17
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-09 16:16:49
+ * @Last Modified time: 2018-08-09 17:02:04
  */
 import React, { PureComponent } from 'react';
 import { Row, Col } from 'antd';
@@ -19,6 +19,7 @@ const SimpleInfoItem = ({ title, titleClassName, headingClassName, subTitle }) =
     <div className={headingClassName || styles.heading}>{subTitle}</div>
   </Col>
 );
+
 class SimpleInfo extends PureComponent {
   render() {
     let res = '';
@@ -26,11 +27,20 @@ class SimpleInfo extends PureComponent {
     if (simpleInfo) {
       res = (
         <Row gutter={16}>
-          <SimpleInfoItem title="平均加载耗时" subTitle={toFixed(simpleInfo.loadTime, true)} />
-          <SimpleInfoItem title="平均白屏耗时" subTitle={toFixed(simpleInfo.whiteTime)} />
+          <SimpleInfoItem
+            title="平均加载耗时"
+            subTitle={toFixed(simpleInfo.loadTime, true)}
+            headingClassName={styles.mainTextSecondary}
+          />
+          <SimpleInfoItem
+            title="平均白屏耗时"
+            subTitle={toFixed(simpleInfo.whiteTime)}
+            headingClassName={styles.mainTextSecondary}
+          />
           <SimpleInfoItem
             title="平均资源加载耗时"
             subTitle={toFixed(simpleInfo.resourceTime, true)}
+            headingClassName={styles.mainTextSecondary}
           />
           <SimpleInfoItem title="平均DOM构建耗时" subTitle={toFixed(simpleInfo.domTime, true)} />
           <SimpleInfoItem
