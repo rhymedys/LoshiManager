@@ -2,28 +2,40 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 11:46:28
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-07 16:16:35
+ * @Last Modified time: 2018-08-10 16:39:49
  */
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Card } from 'antd';
 import { BaseComponent } from '../../Base';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
-import { queryAllPagesUrlByAppId } from '../../../services/pages';
+import { queryAllPagesUrlByAppId, queryAllPagesUrlCountByAppId } from '../../../services/pages';
 import List from './List';
 import { getSeletedAppId } from '../../../utils/selectedAppId';
 
 class Index extends PureComponent {
   componentWillMount() {
-    this.getList(this.props.getRouteQuery(), true);
+    this.init(this.props.getRouteQuery());
   }
 
-  getList = (apiParams, resetState) => {
-    this.props.dispatch({
-      type: 'pagnationList/getList',
+  getList = apiParams => {
+    this.props.dispatchGetList({
       apiParams: Object.assign(apiParams, { appId: getSeletedAppId() }),
       api: queryAllPagesUrlByAppId,
-      resetState,
+    });
+  };
+
+  init = params => {
+    const apiParams = Object.assign(params, { appId: getSeletedAppId() });
+    this.props.dispatchFetchInit({
+      totalResConfig: {
+        apiParams,
+        api: queryAllPagesUrlCountByAppId,
+      },
+      lisResConfig: {
+        apiParams,
+        api: queryAllPagesUrlByAppId,
+      },
     });
   };
 

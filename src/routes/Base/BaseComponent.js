@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2017-05-30 15:24:48
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-06-13 11:37:07
+ * @Last Modified time: 2018-08-10 17:30:26
  */
 import React from 'react';
 import queryString from 'qs';
@@ -15,16 +15,12 @@ import router from '../../utils/router';
  * @returns
  */
 export default ComponsedComponent =>
-  class extends React.Component {
+  class BaseComponent extends React.Component {
+    static rt = ''; // 页面页面状态
+
     constructor(props) {
       super(props);
-      this.state = {
-        queryString,
-        replaceRouter: this.replaceRouter.bind(this),
-        pushRouter: this.pushRouter.bind(this),
-        el: null,
-        getRouteQuery: this.getRouteQuery.bind(this),
-      };
+      this.refreshRt();
     }
 
     /**
@@ -32,12 +28,48 @@ export default ComponsedComponent =>
      *
      * @returns
      */
-    getRouteQuery() {
+    getRouteQuery = () => {
       if (this.props.$route) {
         return queryString.parse(this.props.$route.search.replace('?', ''));
       }
       return queryString.parse(this.props.location.search.replace('?', ''));
-    }
+    };
+
+    /**
+     * 分页初始化
+     *
+     */
+    dispatchFetchInit = params => {
+      this.props.dispatch({
+        type: 'pagnationList/fetchInit',
+        reqTimestamp: {
+          rt: BaseComponent.rt,
+        },
+        ...params,
+      });
+    };
+
+    /**
+     * 分页请求
+     *
+     */
+    dispatchGetList = params => {
+      this.props.dispatch({
+        type: 'pagnationList/getList',
+        rt: BaseComponent.rt,
+        ...params,
+      });
+    };
+
+    /**
+     * 重置分页State
+     *
+     */
+    dispatchPagnationList2DefaultState = () => {
+      this.props.dispatch({
+        type: 'pagnationList/resetDefaultState',
+      });
+    };
 
     /**
      * 替换当前路由
@@ -69,12 +101,24 @@ export default ComponsedComponent =>
       });
     };
 
+    /**
+     * 刷新页面状态唯一标志
+     *
+     */
+    refreshRt = () => {
+      BaseComponent.rt = new Date().getTime();
+    };
+
     render() {
       return (
         <ComponsedComponent
-          ref={el => {
-            this.currentEl = el;
-          }}
+          rt={BaseComponent.rt}
+          replaceRouter={this.replaceRouter}
+          pushRouter={this.pushRouter}
+          getRouteQuery={this.getRouteQuery}
+          dispatchGetList={this.dispatchGetList}
+          dispatchFetchInit={this.dispatchFetchInit}
+          dispatchPagnationList2DefaultState={this.dispatchPagnationList2DefaultState}
           {...this.props}
           {...this.state}
         />

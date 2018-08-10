@@ -5,6 +5,9 @@ import system from './mock/system';
 import user from './mock/user';
 import pages from './mock/pages';
 import environment from './mock/environment';
+import slowResource from './mock/slowResource';
+import ajax from './mock/ajax';
+import slowPages from './mock/slowPages';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -28,12 +31,24 @@ const proxy = {
   'GET pages/queryPagesByUrl': pages.queryPagesByUrl,
   'GET pages/queryAllPagesUrlByAppId': pages.queryAllPagesUrlByAppId,
   'GET pages/queryPagesSimpleInfoByUrlAndTime': pages.queryPagesSimpleInfoByUrlAndTime,
+  'GET pages/queryAllPagesUrlCountByAppId': pages.queryAllPagesUrlCountByAppId,
+  'GET pages/queryPagesCountByUrl': pages.queryPagesCountByUrl,
 
   // ----------------------------environment--------------------------------------
   // 'GET environment/queryUrlEnvironmentByType': (req, res) => {
   //   res.send(environment[`queryUrlEnvironmentByType${req.type}`]);
   // },
   'GET environment/queryUrlEnvironmentByType': environment.queryUrlEnvironmentByType,
+
+  // ----------------------------slowResource--------------------------------------
+  'GET slowResource/queryList': slowResource.queryList,
+
+  // ----------------------------ajax--------------------------------------
+  'GET ajax/queryListGroupByNameByCallUrl': ajax.queryListGroupByNameByCallUrl,
+  'GET ajax/queryListCountGroupByNameByCallUrl': ajax.queryListCountGroupByNameByCallUrl,
+
+  // ----------------------------slowPages--------------------------------------
+  'GET slowPages/queryList': slowPages.queryList,
 };
 
 const res = {};

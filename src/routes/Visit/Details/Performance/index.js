@@ -2,12 +2,12 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-08 10:37:52
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-09 16:32:49
+ * @Last Modified time: 2018-08-10 17:30:32
  */
 import React, { PureComponent, Fragment } from 'react';
 import { Card, Icon } from 'antd';
 import { connect } from 'dva';
-import { queryPagesByUrl } from '../../../../services/pages';
+import { queryPagesByUrl, queryPagesCountByUrl } from '../../../../services/pages';
 import { BaseComponent } from '../../../Base';
 import List from './List';
 import SimpleInfo from './SimpleInfo';
@@ -23,18 +23,20 @@ const nullInfo = (
 class Index extends PureComponent {
   componentWillMount() {
     Promise.all([
-      this.getList(this.props.getRouteQuery(), true),
+      this.init(this.props.getRouteQuery()),
       this.getSimpleInfo(),
       this.getEnvironmentInfo(),
     ]);
   }
 
-  getList = (apiParams, resetState) => {
-    this.props.dispatch({
-      type: 'pagnationList/getList',
+  componentWillUnmount() {
+    this.props.dispatchPagnationList2DefaultState();
+  }
+
+  getList = apiParams => {
+    this.props.dispatchGetList({
       apiParams,
       api: queryPagesByUrl,
-      resetState,
     });
   };
 
@@ -52,12 +54,25 @@ class Index extends PureComponent {
     });
   };
 
+  init = apiParams => {
+    this.props.dispatchFetchInit({
+      totalResConfig: {
+        apiParams,
+        api: queryPagesCountByUrl,
+      },
+      lisResConfig: {
+        apiParams,
+        api: queryPagesByUrl,
+      },
+    });
+  };
+
   render() {
     const listProps = {
       loading: this.props.loading,
       ...this.props.pagnationList,
       location: this.props.$route,
-      onPageChange: val => {
+      onPageChange: async val => {
         const newQueryParams = Object.assign({}, this.props.getRouteQuery(), {
           page: val.current,
           pageSize: val.pageSize,

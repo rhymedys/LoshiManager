@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-06-03 14:49:39
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-07 15:07:20
+ * @Last Modified time: 2018-08-10 17:24:38
  */
 
 const defaultState = {
@@ -14,35 +14,75 @@ const defaultState = {
     total: null,
   },
   dataSource: [],
+  rt: null,
 };
+
+let currentRt = null;
 
 export default {
   namespace: 'pagnationList',
   state: Object.assign({}, defaultState),
   effects: {
     /**
+     * 初始化
+     *
+     * @param {*} {totalResConfig,lisResConfig}
+     * @param {*} {put,all}
+     */
+    *fetchInit({ totalResConfig, lisResConfig, reqTimestamp }, { put, all }) {
+      currentRt = reqTimestamp ? reqTimestamp.rt : null;
+      yield put({ type: 'resetDefaultState', ...reqTimestamp });
+      yield all([
+        put(Object.assign({ type: 'getTotal' }, Object.assign(totalResConfig, reqTimestamp))),
+        put(Object.assign({ type: 'getList' }, Object.assign(lisResConfig, reqTimestamp))),
+      ]);
+    },
+
+    /**
+     * 查询总条数
+     *
+     * @param {*} {apiParams,api}
+     * @param {*} {call,put}
+     */
+    *getTotal({ apiParams, api, rt }, { call, put }) {
+      if (api) {
+        const res = yield call(api, apiParams);
+        if (res && res.resultCode === 0 && currentRt === rt) {
+          yield put({
+            type: 'setPagnationListTotal',
+            total: res.data,
+            rt,
+          });
+        }
+      }
+    },
+
+    /**
      *请求列表数据
      *
      * @param {*} { payload ,api}
      * @param {*} { call,put }
      */
-    *getList({ apiParams, api, resetState }, { call, put }) {
-      if (resetState) yield put({ type: 'resetDefaultState' });
-
+    *getList({ apiParams, api, rt }, { call, put }) {
       if (api) {
         const res = yield call(api, apiParams);
-        if (res && res.resultCode === 0) {
-          yield put({
-            type: 'dispatchPagnationListDataSource',
-            ...apiParams,
-            ...res.data,
-          });
-        } else {
-          yield put({
-            type: 'dispatchPagnationListDataSource',
-            ...apiParams,
-            rows: [],
-          });
+        console.log(currentRt === rt);
+        if (currentRt === rt) {
+          if (res && res.resultCode === 0) {
+            yield put({
+              type: 'dispatchPagnationListDataSource',
+              ...apiParams,
+              rows: res.data,
+              rt,
+            });
+          } else {
+            yield put({
+              type: 'dispatchPagnationListDataSource',
+              ...apiParams,
+              rows: [],
+              rt,
+            });
+          }
         }
       }
     },
@@ -59,8 +99,8 @@ export default {
         pagination: {
           current: Number(payload.page) || 1,
           pageSize: Number(payload.pageSize) || 10,
-          total: payload.results,
         },
+        rt: payload.rt,
       });
     },
   },
@@ -70,8 +110,32 @@ export default {
      * @description 重置状态
      * @returns
      */
-    resetDefaultState() {
-      return defaultState;
+    resetDefaultState(state, payload) {
+      return {
+        ...defaultState,
+        rt: payload ? payload.rt : null,
+      };
+    },
+
+    /**
+     * 设置总数
+     *
+     * @param {*} state
+     * @param {*} {total}
+     * @returns
+     */
+    setPagnationListTotal(state, { total, rt }) {
+      if (currentRt === rt) {
+        return {
+          ...state,
+          pagination: {
+            ...state.pagination,
+            total,
+          },
+        };
+      }
+
+      return state;
     },
 
     /**
@@ -80,15 +144,19 @@ export default {
      * @param {any} { dataSource, pagination }
      * @returns
      */
-    setPagnationListDataSource(state, { dataSource, pagination }) {
-      return {
-        ...state,
-        dataSource,
-        pagination: {
-          ...state.pagination,
-          ...pagination,
-        },
-      };
+    setPagnationListDataSource(state, { dataSource, pagination, rt }) {
+      if (currentRt === rt) {
+        return {
+          ...state,
+          dataSource,
+          pagination: {
+            ...state.pagination,
+            ...pagination,
+          },
+        };
+      }
+
+      return state;
     },
 
     /**

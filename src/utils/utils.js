@@ -174,3 +174,25 @@ export const toFixed = (val, type = false) => {
     return `${res.toFixed(2)} ms`;
   }
 };
+
+export const limitTo = (value, num) => {
+  if (!value) return;
+  let text = '';
+  if (value.length < num) {
+    text = value;
+  } else {
+    text = `${value.substring(0, num)}···`;
+  }
+  return text;
+};
+
+export const toSize = val => {
+  const res = val * 1;
+  if (res >= 1024) {
+    return `${(res / 1024).toFixed(2)} KB`;
+  } else if (res > 0) {
+    return `${res.toFixed(2)} B`;
+  } else {
+    return 0;
+  }
+};

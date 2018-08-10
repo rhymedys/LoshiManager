@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-09 16:18:59
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-09 16:34:12
+ * @Last Modified time: 2018-08-09 17:53:27
  */
 
 import React, { PureComponent } from 'react';
@@ -50,7 +50,6 @@ class EnvironmentInfo extends PureComponent {
         const overBrowser = browserData.splice(4, browserData.length);
         browserData.push({
           browser: '其他',
-          borwserVersion: '其他',
           count: overBrowser.reduce(
             (beforeVal, val) => beforeVal + val.count,
             overBrowser[0].count
@@ -59,7 +58,7 @@ class EnvironmentInfo extends PureComponent {
       }
 
       browserData = browserData.map(val => ({
-        name: `${val.browser}(${val.borwserVersion})`,
+        name: `${val.browser}${val.borwserVersion ? `(${val.borwserVersion})` : ''}`,
         value: val.count,
       }));
 
@@ -116,13 +115,12 @@ class EnvironmentInfo extends PureComponent {
         const overOS = osData.splice(4, osData.length);
         osData.push({
           system: '其他',
-          systemVersion: '其他',
           count: overOS.reduce((beforeVal, val) => beforeVal + val.count, overOS[0].count),
         });
       }
 
       osData = osData.map(val => ({
-        name: `${val.system}(${val.systemVersion})`,
+        name: `${val.system}${val.systemVersion ? `(${val.systemVersion})` : ''}`,
         value: val.count,
       }));
 
