@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-06-03 14:49:39
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-10 17:24:38
+ * @Last Modified time: 2018-08-10 17:38:22
  */
 
 const defaultState = {
@@ -66,7 +66,6 @@ export default {
     *getList({ apiParams, api, rt }, { call, put }) {
       if (api) {
         const res = yield call(api, apiParams);
-        console.log(currentRt === rt);
         if (currentRt === rt) {
           if (res && res.resultCode === 0) {
             yield put({

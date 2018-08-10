@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 15:09:59
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-10 16:09:38
+ * @Last Modified time: 2018-08-10 17:38:28
  */
 
 import React, { PureComponent } from 'react';
@@ -13,10 +13,6 @@ import { toFixed } from '../../../../utils/utils';
 import styles from './styles.less';
 
 class List extends PureComponent {
-  componentWillMount() {
-    console.log('performance componentWillMount', this.props);
-  }
-
   static renderTimeRecord = (text, type, classname) => {
     return <span className={classname}>{toFixed(text, type)}</span>;
   };
