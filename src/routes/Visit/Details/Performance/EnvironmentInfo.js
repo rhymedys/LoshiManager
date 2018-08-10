@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-09 16:18:59
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-09 17:53:27
+ * @Last Modified time: 2018-08-10 17:45:36
  */
 
 import React, { PureComponent } from 'react';
@@ -26,11 +26,11 @@ const EnvironmentInfoCharRootDiv = ({ colProps, divProps }) => (
 );
 
 class EnvironmentInfo extends PureComponent {
-  state = {
-    browserChartDom: React.createRef(),
-    osChartDom: React.createRef(),
-    // cityChartDom: React.createRef(),
-  };
+  constructor(props) {
+    super(props);
+    this.browserChartDom = React.createRef();
+    this.osChartDom = React.createRef();
+  }
 
   componentDidMount() {
     this.reloadAllChart();
@@ -43,7 +43,7 @@ class EnvironmentInfo extends PureComponent {
 
   loadBrowserChart = () => {
     const { environmentInfo } = this.props;
-    if (environmentInfo.length && this.state.browserChartDom.current) {
+    if (environmentInfo.length && this.browserChartDom.current) {
       let browserData = environmentInfo[0];
 
       if (browserData.length > 4) {
@@ -62,7 +62,7 @@ class EnvironmentInfo extends PureComponent {
         value: val.count,
       }));
 
-      echarts.init(this.state.browserChartDom.current, macaronsTheme).setOption({
+      echarts.init(this.browserChartDom.current, macaronsTheme).setOption({
         title: {
           text: '浏览器分类统计',
           left: 'center',
@@ -108,7 +108,7 @@ class EnvironmentInfo extends PureComponent {
 
   loadOsChart() {
     const { environmentInfo } = this.props;
-    if (environmentInfo.length && this.state.osChartDom.current) {
+    if (environmentInfo.length && this.osChartDom.current) {
       let osData = environmentInfo[1];
 
       if (osData.length > 4) {
@@ -124,7 +124,7 @@ class EnvironmentInfo extends PureComponent {
         value: val.count,
       }));
 
-      echarts.init(this.state.osChartDom.current, macaronsTheme).setOption({
+      echarts.init(this.osChartDom.current, macaronsTheme).setOption({
         title: {
           text: '系统分类统计',
           left: 'center',
@@ -176,12 +176,12 @@ class EnvironmentInfo extends PureComponent {
         <Row gutter={48}>
           <EnvironmentInfoCharRootDiv
             divProps={{
-              ref: this.state.browserChartDom,
+              ref: this.browserChartDom,
             }}
           />
           <EnvironmentInfoCharRootDiv
             divProps={{
-              ref: this.state.osChartDom,
+              ref: this.osChartDom,
             }}
           />
         </Row>
