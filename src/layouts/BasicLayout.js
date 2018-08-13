@@ -210,7 +210,7 @@ class BasicLayout extends React.PureComponent {
           onCollapse={this.handleMenuCollapse}
         />
         <Layout style={rightLayoutStyle()}>
-          <Header style={{ padding: 0 }}>
+          <Header style={{ padding: 0, zIndex: 2 }}>
             <GlobalHeader
               logo={logo}
               currentUser={currentUser}

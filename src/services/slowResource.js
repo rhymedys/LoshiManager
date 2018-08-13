@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-10 09:15:30
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-10 09:16:13
+ * @Last Modified time: 2018-08-13 10:21:36
  */
 
 import { stringify } from 'qs';
@@ -16,6 +16,17 @@ import { addPagnationParams } from '../utils/utils';
  * @param {*} params
  * @returns
  */
-export async function queryList(params) {
-  return request(`slowResource/queryList?${stringify(addPagnationParams(params))}`);
+export async function queryListByCallUrl(params) {
+  return request(`slowResource/queryListByCallUrl?${stringify(addPagnationParams(params))}`);
+}
+
+/**
+ * 查询列表数量
+ *
+ * @export
+ * @param {*} params
+ * @returns
+ */
+export async function queryListCountByCallUrl(params) {
+  return request(`slowResource/queryListCountByCallUrl?${stringify(params)}`);
 }

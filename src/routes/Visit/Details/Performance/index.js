@@ -2,16 +2,20 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-08 10:37:52
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-10 17:30:32
+ * @Last Modified time: 2018-08-13 17:08:58
  */
 import React, { PureComponent, Fragment } from 'react';
-import { Card, Icon } from 'antd';
+import { Card, Icon, DatePicker } from 'antd';
 import { connect } from 'dva';
+import moment from 'moment';
+
 import { queryPagesByUrl, queryPagesCountByUrl } from '../../../../services/pages';
 import { BaseComponent } from '../../../Base';
 import List from './List';
 import SimpleInfo from './SimpleInfo';
 import EnvironmentInfo from './EnvironmentInfo';
+import { getTimeDistance } from '../../../../utils/utils';
+import styles from './styles.less';
 
 const nullInfo = (
   <div>
@@ -20,13 +24,12 @@ const nullInfo = (
   </div>
 );
 
+const { RangePicker } = DatePicker;
+
 class Index extends PureComponent {
   componentWillMount() {
-    Promise.all([
-      this.init(this.props.getRouteQuery()),
-      this.getSimpleInfo(),
-      this.getEnvironmentInfo(),
-    ]);
+    const query = this.props.getRouteQuery();
+    Promise.all([this.init(query), this.getSimpleInfo(query), this.getEnvironmentInfo(query)]);
   }
 
   componentWillUnmount() {
@@ -54,6 +57,15 @@ class Index extends PureComponent {
     });
   };
 
+  getRangeDateValue = () => {
+    const { startDate, endDate } = this.props.getRouteQuery();
+    if (startDate && endDate) {
+      return [moment(startDate), moment(endDate)];
+    } else {
+      return getTimeDistance('month');
+    }
+  };
+
   init = apiParams => {
     this.props.dispatchFetchInit({
       totalResConfig: {
@@ -67,7 +79,70 @@ class Index extends PureComponent {
     });
   };
 
+  isActive(type) {
+    const rangePickerValue = this.getRangeDateValue();
+    const value = getTimeDistance(type);
+    if (!rangePickerValue[0] || !rangePickerValue[1]) {
+      return;
+    }
+    if (
+      rangePickerValue[0].isSame(value[0], 'day') &&
+      rangePickerValue[1].isSame(value[1], 'day')
+    ) {
+      return styles.currentDate;
+    }
+  }
+
+  selectDate = type => {
+    this.changeRangePickerValueCb(getTimeDistance(type));
+  };
+
+  handleRangePickerChange = rangePickerValue => {
+    this.changeRangePickerValueCb(rangePickerValue);
+  };
+
+  changeRangePickerValueCb = rangePickerValue => {
+    const startDate = rangePickerValue[0] || '';
+    const endDate = rangePickerValue[1] || '';
+    const newQueryParams = Object.assign({}, this.props.getRouteQuery(), {
+      page: 1,
+      startDate: startDate.format('YYYY-MM-DD HH:mm:ss'),
+      endDate: endDate.format('YYYY-MM-DD HH:mm:ss'),
+    });
+
+    this.props.replaceRouter(newQueryParams);
+    Promise.all([
+      this.init(newQueryParams),
+      this.getSimpleInfo(newQueryParams),
+      this.getEnvironmentInfo(newQueryParams),
+    ]);
+  };
+
   render() {
+    const dateExtra = (
+      <div className={styles.dashboardExtraWrap}>
+        <div className={styles.left}>概况</div>
+        <div className={styles.right}>
+          <div className={styles.rightContent}>
+            <a className={this.isActive('today')} onClick={() => this.selectDate('today')}>
+              今日
+            </a>
+            <a className={this.isActive('week')} onClick={() => this.selectDate('week')}>
+              本周
+            </a>
+            <a className={this.isActive('month')} onClick={() => this.selectDate('month')}>
+              本月
+            </a>
+          </div>
+          <RangePicker
+            value={this.getRangeDateValue()}
+            onChange={this.handleRangePickerChange}
+            style={{ width: 230 }}
+          />
+        </div>
+      </div>
+    );
+
     const listProps = {
       loading: this.props.loading,
       ...this.props.pagnationList,
@@ -85,10 +160,13 @@ class Index extends PureComponent {
     return (
       <Fragment>
         <Card
-          title="概况"
+          title={dateExtra}
           loading={this.props.fetchingSimpleInfo}
           style={{ marginBottom: 20 }}
           bordered={false}
+          headStyle={{
+            alignItems: 'center',
+          }}
         >
           <SimpleInfo simpleInfo={this.props.simpleInfo} nullDiv={nullInfo} />
         </Card>

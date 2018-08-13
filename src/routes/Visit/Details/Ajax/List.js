@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 15:09:59
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-10 16:04:35
+ * @Last Modified time: 2018-08-13 13:55:53
  */
 
 import React, { PureComponent } from 'react';
@@ -56,8 +56,7 @@ class List extends PureComponent {
         onChange={this.props.onTableChange.bind(this)}
         pagination={pagination}
         simple
-        bordered
-        size="middle"
+        size="small"
         rowKey={record => record.name}
       />
     );

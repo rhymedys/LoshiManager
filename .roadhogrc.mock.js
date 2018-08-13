@@ -41,14 +41,16 @@ const proxy = {
   'GET environment/queryUrlEnvironmentByType': environment.queryUrlEnvironmentByType,
 
   // ----------------------------slowResource--------------------------------------
-  'GET slowResource/queryList': slowResource.queryList,
+  'GET slowResource/queryListByCallUrl': slowResource.queryListByCallUrl,
+  'GET slowResource/queryListCountByCallUrl': slowResource.queryListCountByCallUrl,
 
   // ----------------------------ajax--------------------------------------
   'GET ajax/queryListGroupByNameByCallUrl': ajax.queryListGroupByNameByCallUrl,
   'GET ajax/queryListCountGroupByNameByCallUrl': ajax.queryListCountGroupByNameByCallUrl,
 
   // ----------------------------slowPages--------------------------------------
-  'GET slowPages/queryList': slowPages.queryList,
+  'GET slowPages/querListByUrl': slowPages.querListByUrl,
+  'GET slowPages/querListCountByUrl': slowPages.querListCountByUrl,
 };
 
 const res = {};
