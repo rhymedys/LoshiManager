@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-05-30 13:54:32
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-07 16:39:22
+ * @Last Modified time: 2018-08-14 15:11:31
  */
 
 const menuData = [
@@ -31,7 +31,19 @@ const menuData = [
   {
     name: '脚本错误',
     icon: 'dashboard',
-    path: 'admin/script_error',
+    path: 'admin/error',
+    children: [
+      {
+        path: 'list',
+        hideInMenu: true,
+        hideInBreadcrumb: true,
+      },
+      {
+        path: 'detail',
+        hideInMenu: true,
+        hideInBreadcrumb: true,
+      },
+    ],
   },
   {
     name: '页面载入跟踪',

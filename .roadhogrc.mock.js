@@ -8,6 +8,7 @@ import environment from './mock/environment';
 import slowResource from './mock/slowResource';
 import ajax from './mock/ajax';
 import slowPages from './mock/slowPages';
+import error from './mock/error';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -51,6 +52,10 @@ const proxy = {
   // ----------------------------slowPages--------------------------------------
   'GET slowPages/querListByUrl': slowPages.querListByUrl,
   'GET slowPages/querListCountByUrl': slowPages.querListCountByUrl,
+
+  // ----------------------------error--------------------------------------
+  'GET error/getListCount': error.getListCount,
+  'GET error/getList': error.getList,
 };
 
 const res = {};

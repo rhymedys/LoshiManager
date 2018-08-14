@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-08 10:37:52
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-13 10:27:06
+ * @Last Modified time: 2018-08-14 13:48:01
  */
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
@@ -49,12 +49,18 @@ class Index extends PureComponent {
       location: this.props.$route,
       onPageChange: val => {
         const newQueryParams = Object.assign({}, this.props.getRouteQuery(), {
-          callUrl: this.props.getRouteQuery().url,
           page: val.current,
           pageSize: val.pageSize,
         });
         this.props.replaceRouter(newQueryParams);
-        this.getList(newQueryParams);
+        this.getList(
+          Object.assign(
+            {
+              callUrl: this.props.getRouteQuery().url,
+            },
+            newQueryParams
+          )
+        );
       },
     };
 

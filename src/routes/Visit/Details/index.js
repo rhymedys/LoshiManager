@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 11:46:28
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-08 10:35:49
+ * @Last Modified time: 2018-08-14 13:44:54
  */
 import React, { PureComponent } from 'react';
 import { Route, Switch, Redirect } from 'dva/router';
@@ -34,7 +34,9 @@ class Index extends PureComponent {
   handleTabChange = key => {
     const { match } = this.props;
     this.props.pushRouter({
-      query: this.props.getRouteQuery(),
+      query: {
+        url: this.props.getRouteQuery().url,
+      },
       pathname: `${match.url}/${key}`,
     });
   };

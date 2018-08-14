@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-05-30 15:29:02
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-04 22:11:18
+ * @Last Modified time: 2018-08-14 15:43:14
  */
 
 import React from 'react';
@@ -46,8 +46,8 @@ export default ComposedComponent =>
       if (list && list.length) {
         res = list.map(val => {
           return (
-            <Select.Option key={val.value} value={val.value}>
-              {val.label}
+            <Select.Option key={val.v} value={val.v}>
+              {val.l ? val.l : val.v}
             </Select.Option>
           );
         });
