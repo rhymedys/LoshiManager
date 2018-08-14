@@ -2,16 +2,17 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-08 10:37:52
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-13 17:08:58
+ * @Last Modified time: 2018-08-14 11:10:38
  */
 import React, { PureComponent, Fragment } from 'react';
-import { Card, Icon, DatePicker } from 'antd';
+import { Card, Icon, DatePicker, Button } from 'antd';
 import { connect } from 'dva';
 import moment from 'moment';
 
 import { queryPagesByUrl, queryPagesCountByUrl } from '../../../../services/pages';
 import { BaseComponent } from '../../../Base';
 import List from './List';
+import DetaiLineChart from './DetaiLineChart';
 import SimpleInfo from './SimpleInfo';
 import EnvironmentInfo from './EnvironmentInfo';
 import { getTimeDistance } from '../../../../utils/utils';
@@ -27,6 +28,9 @@ const nullInfo = (
 const { RangePicker } = DatePicker;
 
 class Index extends PureComponent {
+  state = {
+    chartMode: false, // 详情显示模式
+  };
   componentWillMount() {
     const query = this.props.getRouteQuery();
     Promise.all([this.init(query), this.getSimpleInfo(query), this.getEnvironmentInfo(query)]);
@@ -112,15 +116,28 @@ class Index extends PureComponent {
 
     this.props.replaceRouter(newQueryParams);
     Promise.all([
-      this.init(newQueryParams),
+      this.init(Object.assign({ pagnationRes: this.state.chartMode }, newQueryParams)),
       this.getSimpleInfo(newQueryParams),
       this.getEnvironmentInfo(newQueryParams),
     ]);
   };
 
+  changeDetailMode = () => {
+    this.setState(
+      {
+        chartMode: !this.state.chartMode,
+      },
+      () => {
+        const params = this.props.getRouteQuery() || {};
+        params.pagnationRes = this.state.chartMode;
+        this.getList(params);
+      }
+    );
+  };
+
   render() {
-    const dateExtra = (
-      <div className={styles.dashboardExtraWrap}>
+    const dashboardTitle = (
+      <div className={styles.titleWrap}>
         <div className={styles.left}>概况</div>
         <div className={styles.right}>
           <div className={styles.rightContent}>
@@ -143,6 +160,19 @@ class Index extends PureComponent {
       </div>
     );
 
+    const detailTitle = (
+      <div className={styles.titleWrap}>
+        <div className={styles.left}>详情</div>
+        <Button
+          icon={this.state.chartMode ? 'table' : 'area-chart'}
+          type="primary"
+          onClick={this.changeDetailMode}
+        >
+          {this.state.chartMode ? '列表' : '折线图'}
+        </Button>
+      </div>
+    );
+
     const listProps = {
       loading: this.props.loading,
       ...this.props.pagnationList,
@@ -157,10 +187,16 @@ class Index extends PureComponent {
       },
     };
 
+    const detaiLineChartProps = {
+      loading: this.props.loading,
+      ...this.props.pagnationList,
+      routeQuery: this.props.getRouteQuery(),
+    };
+
     return (
       <Fragment>
         <Card
-          title={dateExtra}
+          title={dashboardTitle}
           loading={this.props.fetchingSimpleInfo}
           style={{ marginBottom: 20 }}
           bordered={false}
@@ -177,8 +213,14 @@ class Index extends PureComponent {
         >
           <EnvironmentInfo environmentInfo={this.props.environmentInfo} nullDiv={nullInfo} />
         </Card>
-        <Card title="详情" bordered={false}>
-          <List {...listProps} />
+        <Card
+          title={detailTitle}
+          bordered={false}
+          loading={this.props.loading && this.state.chartMode}
+        >
+          {!this.state.chartMode && <List {...listProps} />}
+          {this.state.chartMode &&
+            !this.props.loading && <DetaiLineChart {...detaiLineChartProps} />}
         </Card>
       </Fragment>
     );

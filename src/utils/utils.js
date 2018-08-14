@@ -155,12 +155,12 @@ export const addPagnationParams = data => {
     ...data,
   };
 
-  if (data) {
+  if (data && !data.pagnationRes) {
     res.limit = data.pageSize || 10;
     res.start = data.page > 1 ? (data.page - 1) * data.pageSize : 0;
   }
 
-  res = removeAttFromObj(res, ['pageSize', 'page']);
+  res = removeAttFromObj(res, ['pageSize', 'page', 'pagnationRes']);
 
   return res;
 };
