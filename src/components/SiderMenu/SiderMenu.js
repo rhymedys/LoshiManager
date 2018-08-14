@@ -137,7 +137,10 @@ export default class SiderMenu extends PureComponent {
             {childrenItems}
           </SubMenu>
         );
+      } else if (item.name && item.showWithoutChildren) {
+        return <Menu.Item key={item.path}>{this.getMenuItemPath(item)}</Menu.Item>;
       }
+
       return null;
     } else {
       return <Menu.Item key={item.path}>{this.getMenuItemPath(item)}</Menu.Item>;

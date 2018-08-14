@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-05-30 13:54:32
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-14 15:11:31
+ * @Last Modified time: 2018-08-14 17:54:34
  */
 
 const menuData = [
@@ -19,7 +19,6 @@ const menuData = [
       {
         path: 'list',
         hideInMenu: true,
-        hideInBreadcrumb: true,
       },
       {
         path: 'detail',
@@ -32,16 +31,17 @@ const menuData = [
     name: '脚本错误',
     icon: 'dashboard',
     path: 'admin/error',
+    showWithoutChildren: true,
     children: [
       {
+        name: '列表',
         path: 'list',
         hideInMenu: true,
-        hideInBreadcrumb: true,
       },
       {
-        path: 'detail',
+        path: 'detailList',
+        name: '详情列表',
         hideInMenu: true,
-        hideInBreadcrumb: true,
       },
     ],
   },

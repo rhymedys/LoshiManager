@@ -25,7 +25,7 @@ const { AuthorizedRoute, check } = Authorized;
  */
 const redirectData = [];
 const getRedirect = item => {
-  if (item && item.children) {
+  if (item && item.children && !item.unRedirectToFirst) {
     if (item.children[0] && item.children[0].path) {
       redirectData.push({
         from: `${item.path}`,
@@ -37,6 +37,7 @@ const getRedirect = item => {
     }
   }
 };
+
 getMenuData().forEach(getRedirect);
 
 /**

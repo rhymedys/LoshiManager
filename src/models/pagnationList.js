@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-06-03 14:49:39
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-10 17:38:22
+ * @Last Modified time: 2018-08-14 16:32:38
  */
 
 const defaultState = {

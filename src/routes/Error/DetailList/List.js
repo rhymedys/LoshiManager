@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 15:09:59
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-14 17:52:44
+ * @Last Modified time: 2018-08-14 16:28:47
  */
 
 import React, { PureComponent } from 'react';
@@ -10,10 +10,6 @@ import { Link } from 'dva/router';
 import { Table } from 'antd';
 import { BaseListComponents } from '../../Base';
 import styles from './styles.less';
-
-const ToDetailLink = ({ url, text }) => (
-  <Link to={`detailList?url=${encodeURIComponent(url)}`}>{text}</Link>
-);
 
 class List extends PureComponent {
   render() {
@@ -25,7 +21,7 @@ class List extends PureComponent {
         dataIndex: 'resourceUrl',
         key: 'resourceUrl',
         render: text => {
-          return <ToDetailLink url={text} text={text} />;
+          return <Link to={`detail?url=${encodeURIComponent(text)}`}>{text}</Link>;
         },
       },
       {
@@ -46,8 +42,8 @@ class List extends PureComponent {
         key: 'operation',
         width: 100,
         fixed: 'right',
-        render: (text, record) => {
-          return <ToDetailLink url={record.resourceUrl} text="查看详情" />;
+        render: () => {
+          return <Link to="detail">查看详情</Link>;
         },
       },
     ];
