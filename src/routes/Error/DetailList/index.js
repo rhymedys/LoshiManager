@@ -2,17 +2,16 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 11:46:28
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-14 17:55:29
+ * @Last Modified time: 2018-08-15 11:34:46
  */
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Card } from 'antd';
 import { BaseComponent } from '../../Base';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
-import { getList, getListCount } from '../../../services/error';
+import { getItemList, getItemListCount } from '../../../services/error';
 import List from './List';
 import Header from './Header';
-import { getSeletedAppId } from '../../../utils/selectedAppId';
 
 class Index extends PureComponent {
   componentWillMount() {
@@ -30,14 +29,13 @@ class Index extends PureComponent {
 
   getList = apiParams => {
     this.props.dispatchGetList({
-      apiParams: Object.assign(apiParams, { appId: getSeletedAppId() }),
-      api: getList,
+      apiParams,
+      api: getItemList,
     });
   };
 
   handleSearchReset = () => {
     const newQueryParams = Object.assign({}, this.props.getRouteQuery(), {
-      category: '',
       startDate: '',
       endDate: '',
     });
@@ -55,7 +53,7 @@ class Index extends PureComponent {
 
     delete res.rangeDate;
 
-    const newQueryParams = Object.assign({}, res, {
+    const newQueryParams = Object.assign({}, this.props.getRouteQuery(), res, {
       page: 1,
       pageSize: this.props.getRouteQuery().pageSize,
     });
@@ -64,30 +62,31 @@ class Index extends PureComponent {
     this.getList(newQueryParams);
   };
 
-  init = params => {
-    const apiParams = Object.assign(params, { appId: getSeletedAppId() });
+  init = apiParams => {
     this.props.dispatchFetchInit({
       totalResConfig: {
         apiParams,
-        api: getListCount,
+        api: getItemListCount,
       },
       lisResConfig: {
         apiParams,
-        api: getList,
+        api: getItemList,
       },
     });
   };
 
   render() {
+    const routeQuery = this.props.getRouteQuery();
     const listProps = {
       loading: this.props.loading,
       ...this.props.pagnationList,
-      location: this.props.$route,
+      routeQuery,
       onPageChange: this.onPageChange,
+      location: this.props.$route,
     };
 
     const headerProps = {
-      routeQuery: this.props.getRouteQuery(),
+      routeQuery,
       handleSearchReset: this.handleSearchReset,
       handleSearch: this.handleSearch,
     };

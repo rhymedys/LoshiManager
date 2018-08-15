@@ -2,11 +2,13 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-05-30 15:29:02
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-14 15:43:14
+ * @Last Modified time: 2018-08-15 11:47:42
  */
 
 import React from 'react';
 import moment from 'moment';
+import Debounce from 'lodash-decorators/debounce';
+import Bind from 'lodash-decorators/bind';
 import { Select } from 'antd';
 
 export default ComposedComponent =>
@@ -26,11 +28,11 @@ export default ComposedComponent =>
      *
      * @param {*} obj
      */
-    setExtraSubmitValues(obj) {
+    setExtraSubmitValues = obj => {
       if (obj && obj.key) {
         this.extraSubmitValues[obj.key] = obj.value;
       }
-    }
+    };
 
     /**
    *生成 <Select.Option value={val.value}>{val.label}</Select.Option >
@@ -63,7 +65,9 @@ export default ComposedComponent =>
       }
     };
 
-    handRestForm = () => {
+    @Bind()
+    @Debounce(200)
+    handRestForm() {
       const { handleSearchReset, form } = this.props;
       if (handleSearchReset) {
         handleSearchReset();
@@ -78,7 +82,7 @@ export default ComposedComponent =>
           rangeDate: [null, null],
         });
       }
-    };
+    }
 
     /**
      *
@@ -106,12 +110,12 @@ export default ComposedComponent =>
         <ComposedComponent
           {...this.props}
           {...this.state}
-          setExtraSubmitValues={this.setExtraSubmitValues.bind(this)}
-          handleSubmit={this.handleSubmit.bind(this)}
-          handRestForm={this.handRestForm.bind(this)}
-          handleGetRangePickDefaultValue={this.handleGetRangePickDefaultValue.bind(this)}
-          getBaseRangeDate={this.getBaseRangeDate.bind(this)}
-          generateSelectOption={this.generateSelectOption.bind(this)}
+          setExtraSubmitValues={this.setExtraSubmitValues}
+          handleSubmit={this.handleSubmit}
+          handRestForm={this.handRestForm}
+          handleGetRangePickDefaultValue={this.handleGetRangePickDefaultValue}
+          getBaseRangeDate={this.getBaseRangeDate}
+          generateSelectOption={this.generateSelectOption}
         />
       );
     }

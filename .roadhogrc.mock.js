@@ -56,6 +56,8 @@ const proxy = {
   // ----------------------------error--------------------------------------
   'GET error/getListCount': error.getListCount,
   'GET error/getList': error.getList,
+  'GET error/getItemList': error.getItemList,
+  'GET error/getItemListCount': error.getItemListCount,
 };
 
 const res = {};

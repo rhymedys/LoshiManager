@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 15:09:59
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-14 17:52:44
+ * @Last Modified time: 2018-08-15 11:10:26
  */
 
 import React, { PureComponent } from 'react';
@@ -11,8 +11,8 @@ import { Table } from 'antd';
 import { BaseListComponents } from '../../Base';
 import styles from './styles.less';
 
-const ToDetailLink = ({ url, text }) => (
-  <Link to={`detailList?url=${encodeURIComponent(url)}`}>{text}</Link>
+const ToDetailLink = ({ url, text, category }) => (
+  <Link to={`detailList?url=${encodeURIComponent(url)}&category=${category}`}>{text}</Link>
 );
 
 class List extends PureComponent {
@@ -24,8 +24,8 @@ class List extends PureComponent {
         title: '错误请求URL',
         dataIndex: 'resourceUrl',
         key: 'resourceUrl',
-        render: text => {
-          return <ToDetailLink url={text} text={text} />;
+        render: (text, record) => {
+          return <ToDetailLink url={text} text={text} category={record.category} />;
         },
       },
       {
@@ -47,7 +47,9 @@ class List extends PureComponent {
         width: 100,
         fixed: 'right',
         render: (text, record) => {
-          return <ToDetailLink url={record.resourceUrl} text="查看详情" />;
+          return (
+            <ToDetailLink url={record.resourceUrl} category={record.category} text="查看详情" />
+          );
         },
       },
     ];
