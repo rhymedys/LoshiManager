@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-06-25 15:01:56
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-04 22:50:12
+ * @Last Modified time: 2018-08-15 15:19:00
  */
 import React from 'react';
 import qs from 'qs';
@@ -15,12 +15,6 @@ import qs from 'qs';
  */
 export default ComponsedComponent =>
   class extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        onTableChange: this.onTableChange,
-      };
-    }
     /**
      * 表格发生改变时
      *
@@ -33,10 +27,10 @@ export default ComponsedComponent =>
       }
 
       const extraState = {};
-      if (filters !== this.state.filteredInfo) {
+      if (this.state && filters !== this.state.filteredInfo) {
         extraState.filteredInfo = filters;
       }
-      if (sorter !== this.state.sortedInfo) {
+      if (this.state && sorter !== this.state.sortedInfo) {
         extraState.sortedInfo = sorter;
       }
 
@@ -47,13 +41,7 @@ export default ComponsedComponent =>
 
     render() {
       return (
-        <ComponsedComponent
-          ref={el => {
-            this.currentEl = el;
-          }}
-          {...this.props}
-          {...this.state}
-        />
+        <ComponsedComponent {...this.props} {...this.state} onTableChange={this.onTableChange} />
       );
     }
   };
