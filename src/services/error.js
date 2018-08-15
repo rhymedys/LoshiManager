@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-14 15:14:37
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-15 11:03:08
+ * @Last Modified time: 2018-08-15 14:02:31
  */
 
 import { stringify } from 'qs';
@@ -55,4 +55,15 @@ export async function getItemList(params) {
  */
 export async function getItemListCount(params) {
   return request(`error/getItemListCount?${stringify(params)}`);
+}
+
+/**
+ * 获取错误详情
+ *
+ * @export
+ * @param {*} params
+ * @returns
+ */
+export async function getErrorDetail(params) {
+  return request(`error/getErrorDetail?${stringify(params)}`);
 }

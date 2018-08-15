@@ -58,6 +58,7 @@ const proxy = {
   'GET error/getList': error.getList,
   'GET error/getItemList': error.getItemList,
   'GET error/getItemListCount': error.getItemListCount,
+  'GET error/getErrorDetail': error.getErrorDetail,
 };
 
 const res = {};

@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-14 15:12:34
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-15 11:02:16
+ * @Last Modified time: 2018-08-15 14:01:53
  */
 
 export default {
@@ -124,5 +124,29 @@ export default {
         method: '',
       },
     ],
+  },
+  getErrorDetail: {
+    resultCode: 0,
+    resultDesc: 'success',
+    data: {
+      id: 16,
+      systemId: 16,
+      msg: 'SyntaxError: Unexpected token <',
+      useragent:
+        '5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1',
+      category: 'js',
+      createTime: '2018-02-02T07:14:15.000Z',
+      pageUrl: 'http://127.0.0.1:8000/orderlist',
+      resourceUrl: 'http://127.0.0.1:8000/pt-agent/api/agent/queryJsApiTicket',
+      target: '',
+      type: '',
+      status: '',
+      text: '',
+      col: '1',
+      line: '1',
+      querydata: '{}',
+      method: 'GET',
+      fullurl: 'http://127.0.0.1:8000/pt-agent/api/agent/queryJsApiTicket',
+    },
   },
 };

@@ -2,11 +2,12 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 15:09:59
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-15 11:49:23
+ * @Last Modified time: 2018-08-15 14:30:13
  */
 
 import React, { PureComponent } from 'react';
 import { Table } from 'antd';
+import { Link } from 'dva/router';
 import { BaseListComponents } from '../../Base';
 import styles from './styles.less';
 
@@ -21,6 +22,7 @@ class List extends PureComponent {
         key: 'resourceUrl',
         width: 200,
         fixed: 'left',
+        render: (text, record) => <Link to={`detail?id=${record.id}`}>{text}</Link>,
       },
       {
         title: '错误信息',
@@ -30,30 +32,15 @@ class List extends PureComponent {
         width: 500,
       },
       {
-        title: '浏览器UA',
-        dataIndex: 'useragent',
-        key: 'useragent',
-      },
-      {
-        title: '资源类型',
+        title: '错误类型',
         dataIndex: 'category',
         key: 'category',
-      },
-      {
-        title: '生成时间',
-        dataIndex: 'createTime',
-        key: 'createTime',
       },
       {
         title: '所属URL',
         dataIndex: 'pageUrl',
         key: 'pageUrl',
         width: 200,
-      },
-      {
-        title: '生成时间',
-        dataIndex: 'createTime',
-        key: 'createTime',
       },
     ];
 
@@ -66,7 +53,7 @@ class List extends PureComponent {
             key: 'target',
           },
           {
-            title: '错误类型',
+            title: '资源类型',
             dataIndex: 'type',
             key: 'type',
           }
@@ -75,12 +62,12 @@ class List extends PureComponent {
       case 'js':
         columns.push(
           {
-            title: '错误列',
+            title: '错误行',
             dataIndex: 'line',
             key: 'line',
           },
           {
-            title: '错误行',
+            title: '错误列',
             dataIndex: 'col',
             key: 'col',
           }
@@ -106,12 +93,6 @@ class List extends PureComponent {
 
     columns.push(
       {
-        title: '完整URL',
-        dataIndex: 'fullurl',
-        key: 'fullurl',
-        width: 200,
-      },
-      {
         title: '请求方式',
         dataIndex: 'method',
         key: 'method',
@@ -120,6 +101,19 @@ class List extends PureComponent {
         title: '请求参数',
         dataIndex: 'querydata',
         key: 'querydata',
+      },
+      {
+        title: '报错时间',
+        dataIndex: 'createTime',
+        key: 'createTime',
+      },
+      {
+        title: '操作',
+        dataIndex: 'operation',
+        key: 'operation',
+        fixed: 'right',
+        width: 100,
+        render: (text, record) => <Link to={`detail?id=${record.id}`}>查看详情</Link>,
       }
     );
 
