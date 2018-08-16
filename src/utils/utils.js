@@ -166,13 +166,17 @@ export const addPagnationParams = data => {
 };
 
 export const toFixed = (val, type = false) => {
-  let res = parseFloat(val);
-  if (type) {
-    res /= 1000;
-    return res > 0 ? `${res.toFixed(3)} s` : res.toFixed(2);
-  } else {
-    return `${res.toFixed(2)} ms`;
+  if (Object.prototype.toString.call(val) === '[object Number]') {
+    let res = parseFloat(val);
+    if (type) {
+      res /= 1000;
+      return res > 0 ? `${res.toFixed(3)} s` : res.toFixed(2);
+    } else {
+      return `${res.toFixed(2)} ms`;
+    }
   }
+
+  return '未知';
 };
 
 export const limitTo = (value, num) => {

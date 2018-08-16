@@ -13,7 +13,11 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const params = {
+        passWord: payload.password,
+        userName: payload.userName,
+      };
+      const response = yield call(fakeAccountLogin, params);
       yield put({
         type: 'changeLoginStatus',
         payload: {

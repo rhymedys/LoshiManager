@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 16:52:18
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-06 14:24:14
+ * @Last Modified time: 2018-08-16 17:00:02
  */
 
 import React, { Fragment, PureComponent } from 'react';
@@ -149,8 +149,12 @@ class Index extends PureComponent {
         cancelText: '取消',
         onOk: async () => {
           await updateSystem({
-            body: values,
-          }).then(() => window.history.back());
+            body: Object.assign({ app: this.props.getRouteQuery().appId, values }),
+          }).then(res => {
+            if (res && res.resultCode === 0) {
+              window.history.back();
+            }
+          });
         },
       });
     });

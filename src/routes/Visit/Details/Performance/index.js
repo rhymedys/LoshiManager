@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-08 10:37:52
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-14 11:10:38
+ * @Last Modified time: 2018-08-16 20:02:46
  */
 import React, { PureComponent, Fragment } from 'react';
 import { Card, Icon, DatePicker, Button } from 'antd';
@@ -106,8 +106,8 @@ class Index extends PureComponent {
   };
 
   changeRangePickerValueCb = rangePickerValue => {
-    const startDate = rangePickerValue[0] || '';
-    const endDate = rangePickerValue[1] || '';
+    const startDate = rangePickerValue[0];
+    const endDate = rangePickerValue[1];
     const newQueryParams = Object.assign({}, this.props.getRouteQuery(), {
       page: 1,
       startDate: startDate.format('YYYY-MM-DD HH:mm:ss'),

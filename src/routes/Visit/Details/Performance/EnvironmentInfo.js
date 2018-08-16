@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-09 16:18:59
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-14 10:44:23
+ * @Last Modified time: 2018-08-16 20:17:23
  */
 
 import React, { PureComponent } from 'react';
@@ -10,18 +10,22 @@ import { Row, Col } from 'antd';
 import 'echarts/lib/chart/pie';
 import echarts, { macaronsTheme } from '../../../../utils/eChart';
 
-const EnvironmentInfoCharRootDiv = ({ colProps, divProps }) => (
+const EnvironmentInfoCharRootDiv = ({ colProps, divProps, nullDiv, showNull }) => (
   <Col span={colProps && colProps.span ? colProps.span : 12}>
-    <div
-      {...divProps}
-      style={{
-        height: 380,
-        width: 'auto',
-        overflow: 'hidden',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      }}
-    />
+    {showNull ? (
+      nullDiv
+    ) : (
+      <div
+        {...divProps}
+        style={{
+          height: 380,
+          width: 'auto',
+          overflow: 'hidden',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}
+      />
+    )}
   </Col>
 );
 
@@ -45,6 +49,8 @@ class EnvironmentInfo extends PureComponent {
     const { environmentInfo } = this.props;
     if (environmentInfo.length && this.browserChartDom.current) {
       let browserData = environmentInfo[0];
+
+      if (!browserData.length) return;
 
       if (browserData.length > 4) {
         const overBrowser = browserData.splice(4, browserData.length);
@@ -111,6 +117,8 @@ class EnvironmentInfo extends PureComponent {
     if (environmentInfo.length && this.osChartDom.current) {
       let osData = environmentInfo[1];
 
+      if (!osData.length) return;
+
       if (osData.length > 4) {
         const overOS = osData.splice(4, osData.length);
         osData.push({
@@ -171,17 +179,21 @@ class EnvironmentInfo extends PureComponent {
   render() {
     let res = '';
     const { environmentInfo, nullDiv } = this.props;
-    if (environmentInfo.length) {
+    if (environmentInfo.length && (environmentInfo[0].length || environmentInfo[1].length)) {
       res = (
         <Row gutter={48}>
           <EnvironmentInfoCharRootDiv
             divProps={{
               ref: this.browserChartDom,
+              nullDiv,
+              showNull: !environmentInfo[0].length,
             }}
           />
           <EnvironmentInfoCharRootDiv
             divProps={{
               ref: this.osChartDom,
+              nullDiv,
+              showNull: !environmentInfo[1].length,
             }}
           />
         </Row>

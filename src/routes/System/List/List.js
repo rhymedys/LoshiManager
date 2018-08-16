@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 11:32:57
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-09 15:44:47
+ * @Last Modified time: 2018-08-16 17:10:05
  */
 
 import React from 'react';
@@ -16,7 +16,7 @@ const operationStyles = {
 
 class List extends React.Component {
   static render2DomByStatus(num) {
-    return <span>{num === 1 ? '是' : '否'}</span>;
+    return <span>{num === 1 ? '否' : '是'}</span>;
   }
 
   render() {

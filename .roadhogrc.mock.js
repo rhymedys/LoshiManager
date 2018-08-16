@@ -64,7 +64,11 @@ const proxy = {
 const res = {};
 Object.keys(proxy).forEach(val => {
   const keySplit = val.split(/\s+/);
+  // console.log(`http://127.0.0.1:7001/loshi/api/${keySplit[1]}`)
   res[`${keySplit[0]} /loshi/api/${keySplit[1]}`] = proxy[val];
+  // res[`${keySplit[0]} /loshi/api/${keySplit[1]}`] = `http://127.0.0.1:7001/loshi/api/${keySplit[1]}`;
 });
+
+// console.log(res)
 
 export default (noProxy ? {} : delay(res, 1000));
