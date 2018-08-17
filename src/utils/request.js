@@ -22,12 +22,20 @@ const codeMessage = {
   504: '网关超时。',
 };
 
+const loginPagePathName = '/admin/user/login';
+
 async function checkResultCode(response) {
   const res = await response.clone().json();
   if (res && res.resultCode !== 0) {
     message.error(res.resultDesc || '网络异常');
+    if (res.resultCode === 400001 && window.location.pathname !== loginPagePathName) {
+      window.location.replace(
+        `${window.location.origin}${loginPagePathName}?redirect_uri=${encodeURIComponent(
+          window.location.href
+        )}`
+      );
+    }
   }
-
   return response;
 }
 

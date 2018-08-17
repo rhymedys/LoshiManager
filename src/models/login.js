@@ -1,5 +1,6 @@
 import { routerRedux } from 'dva/router';
-import { fakeAccountLogin } from '../services/login';
+import qs from 'qs';
+import { fakeAccountLogin, fakeAccountLogout } from '../services/login';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 import appConfig from '../config/app';
@@ -18,26 +19,35 @@ export default {
         userName: payload.userName,
       };
       const response = yield call(fakeAccountLogin, params);
-      yield put({
-        type: 'changeLoginStatus',
-        payload: {
-          status: response.resultCode === 0,
-        },
-      });
-      // Login successfully
-      if (response.resultCode === 0) {
-        reloadAuthorized();
-        yield put(routerRedux.push(`${appConfig.appRootPath}system`));
+      if (response) {
+        yield put({
+          type: 'changeLoginStatus',
+          payload: {
+            status: response.resultCode === 0,
+            currentAuthority: 'admin',
+          },
+        });
+        // Login successfully
+        if (response.resultCode === 0) {
+          reloadAuthorized();
+          const query = qs.parse(window.location.search.replace('?', ''));
+          if (query && query.redirect_uri) {
+            window.location.replace(decodeURIComponent(query.redirect_uri));
+          } else {
+            yield put(routerRedux.push(`${appConfig.appRootPath}system`));
+          }
+        }
       }
     },
-    *logout(_, { put, select }) {
+    *logout(_, { put, select, call }) {
+      yield call(fakeAccountLogout);
       try {
         // get location pathname
         const urlParams = new URL(window.location.href);
         const pathname = yield select(state => state.routing.location.pathname);
         // add the parameters in the url
-        urlParams.searchParams.set('redirect', pathname);
-        window.history.replaceState(null, 'login', urlParams.href);
+        urlParams.searchParams.set('redirect_uri', pathname);
+        window.history.replaceState(null, 'admin/user/login', urlParams.href);
       } finally {
         yield put({
           type: 'changeLoginStatus',
@@ -47,7 +57,7 @@ export default {
           },
         });
         reloadAuthorized();
-        yield put(routerRedux.push('/user/login'));
+        yield put(routerRedux.push('admin/user/login'));
       }
     },
   },

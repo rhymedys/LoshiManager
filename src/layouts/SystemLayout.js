@@ -2,7 +2,7 @@ import React from 'react';
 import pathToRegexp from 'path-to-regexp';
 import DocumentTitle from 'react-document-title';
 import { Layout, Icon } from 'antd';
-import { Route, Redirect, Switch } from 'dva/router';
+import { Route, Redirect, Switch, routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import GlobalHeader from '../components/GlobalHeader';
 import GlobalFooter from '../components/GlobalFooter';
@@ -72,6 +72,18 @@ class SystemLayout extends React.PureComponent {
       return path;
     }
     return redirect;
+  };
+
+  handleMenuClick = ({ key }) => {
+    if (key === 'triggerError') {
+      this.props.dispatch(routerRedux.push('/exception/trigger'));
+      return;
+    }
+    if (key === 'logout') {
+      this.props.dispatch({
+        type: 'login/logout',
+      });
+    }
   };
 
   render() {
