@@ -2,11 +2,12 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2017-05-30 15:24:48
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-10 17:30:26
+ * @Last Modified time: 2018-08-20 21:24:46
  */
 import React from 'react';
 import queryString from 'qs';
 import router from '../../utils/router';
+import { formatMomentObj2YYYYMMDDHHmmss } from '../../utils/utils';
 
 /**
  * 高阶组件 用于组件继承
@@ -116,6 +117,7 @@ export default ComponsedComponent =>
           replaceRouter={this.replaceRouter}
           pushRouter={this.pushRouter}
           getRouteQuery={this.getRouteQuery}
+          formatMomentObj2YYYYMMDDHHmmss={formatMomentObj2YYYYMMDDHHmmss}
           dispatchGetList={this.dispatchGetList}
           dispatchFetchInit={this.dispatchFetchInit}
           dispatchPagnationList2DefaultState={this.dispatchPagnationList2DefaultState}

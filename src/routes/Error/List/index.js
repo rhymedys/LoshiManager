@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-07 11:46:28
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-15 11:34:16
+ * @Last Modified time: 2018-08-20 21:23:39
  */
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
@@ -49,8 +49,9 @@ class Index extends PureComponent {
     const res = Object.assign({}, value);
     const { rangeDate } = res;
     if (rangeDate && rangeDate[0] && rangeDate[1]) {
-      res.startDate = rangeDate[0].format('YYYY-MM-DD');
-      res.endDate = rangeDate[1].format('YYYY-MM-DD');
+      const { formatMomentObj2YYYYMMDDHHmmss } = this.props;
+      res.startDate = formatMomentObj2YYYYMMDDHHmmss(rangeDate[0]);
+      res.endDate = formatMomentObj2YYYYMMDDHHmmss(rangeDate[1]);
     }
 
     delete res.rangeDate;

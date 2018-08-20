@@ -52,6 +52,13 @@ export function getTimeDistance(type) {
   }
 }
 
+export function formatMomentObj2YYYYMMDDHHmmss(momentObj) {
+  if (momentObj instanceof moment) {
+    return momentObj.format('YYYY-MM-DD HH:mm:ss');
+  }
+  return momentObj;
+}
+
 export function getPlainNode(nodeList, parentPath = '') {
   const arr = [];
   nodeList.forEach(node => {

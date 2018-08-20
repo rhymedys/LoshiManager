@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-05-30 15:29:02
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-15 11:47:42
+ * @Last Modified time: 2018-08-20 21:31:00
  */
 
 import React from 'react';
@@ -10,15 +10,40 @@ import moment from 'moment';
 import Debounce from 'lodash-decorators/debounce';
 import Bind from 'lodash-decorators/bind';
 import { Select } from 'antd';
+import { formatMomentObj2YYYYMMDDHHmmss } from '../../utils/utils';
 
 export default ComposedComponent =>
   class extends React.Component {
     getBaseRangeDate = () => {
+      const yesterdayEnd = moment()
+        .add('-1', 'day')
+        .endOf('day');
       return {
-        今天: [moment(), moment()],
-        近3天: [moment().add(-3, 'day'), moment()],
-        近7天: [moment().add(-7, 'day'), moment()],
-        近1月: [moment().add(-1, 'month'), moment()],
+        今天: [moment().startOf('day'), moment().endOf('day')],
+        昨天: [
+          moment()
+            .add(-1, 'day')
+            .startOf('day'),
+          yesterdayEnd,
+        ],
+        近3天: [
+          moment()
+            .add(-3, 'day')
+            .startOf('day'),
+          yesterdayEnd,
+        ],
+        近7天: [
+          moment()
+            .add(-7, 'day')
+            .startOf('day'),
+          yesterdayEnd,
+        ],
+        近1月: [
+          moment()
+            .add(-1, 'month')
+            .startOf('day'),
+          yesterdayEnd,
+        ],
         当月: [moment().startOf('month'), moment().endOf('month')],
       };
     };
@@ -116,6 +141,7 @@ export default ComposedComponent =>
           handleGetRangePickDefaultValue={this.handleGetRangePickDefaultValue}
           getBaseRangeDate={this.getBaseRangeDate}
           generateSelectOption={this.generateSelectOption}
+          formatMomentObj2YYYYMMDDHHmmss={formatMomentObj2YYYYMMDDHHmmss}
         />
       );
     }
