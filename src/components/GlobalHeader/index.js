@@ -71,6 +71,7 @@ export default class GlobalHeader extends PureComponent {
       showCollapsed = true,
       showHeaderSearch = true,
       showTitle = false,
+      showMyApp,
     } = this.props;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
@@ -132,6 +133,13 @@ export default class GlobalHeader extends PureComponent {
               <Icon type="question-circle-o" />
             </a>
           </Tooltip>
+          {showMyApp && (
+            <Tooltip title="我的应用">
+              <Link to="/admin/system/list" className={styles.action}>
+                <Icon type="appstore-o" />
+              </Link>
+            </Tooltip>
+          )}
           <NoticeIcon
             className={styles.action}
             count={currentUser.notifyCount}
@@ -162,6 +170,7 @@ export default class GlobalHeader extends PureComponent {
               emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
             />
           </NoticeIcon>
+
           {currentUser.name ? (
             <Dropdown overlay={menu} getPopupContainer={triggerNode => triggerNode}>
               <span className={`${styles.action} ${styles.account}`}>

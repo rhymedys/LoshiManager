@@ -222,6 +222,7 @@ class BasicLayout extends React.PureComponent {
               onNoticeClear={this.handleNoticeClear}
               onCollapse={this.handleMenuCollapse}
               onMenuClick={this.handleMenuClick}
+              showMyApp
             />
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>

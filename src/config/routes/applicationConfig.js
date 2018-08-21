@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-06 09:52:10
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-07 11:52:49
+ * @Last Modified time: 2018-08-21 11:40:44
  */
 export default function(app, dynamicWrapper) {
   return {
