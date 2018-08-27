@@ -2,7 +2,7 @@
  * @Author: Rhymedys/Rhymedys@gmail.com
  * @Date: 2018-08-03 16:52:18
  * @Last Modified by: Rhymedys
- * @Last Modified time: 2018-08-17 14:25:57
+ * @Last Modified time: 2018-08-27 16:42:17
  */
 
 import React, { Fragment, PureComponent } from 'react';
@@ -193,7 +193,7 @@ class Index extends PureComponent {
           <FormItem label="统计页面资源加载" {...titleFormItemLayout}>
             {getFieldDecorator('isStatisiResource', {
               valuePropName: 'checked',
-              initialValue: initAppData.isStatisiPages === 0,
+              initialValue: initAppData.isStatisiResource === 0,
             })(
               <Switch
                 onChange={this.isStatisiResourceOnChange}

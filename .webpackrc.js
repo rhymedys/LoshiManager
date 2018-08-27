@@ -22,11 +22,12 @@ const config = {
   theme: './src/theme.js',
   html: {
     template: './src/index.ejs',
-    filename: process.env.NODE_ENV === 'production' ? '../dist/index.ejs' : 'index.html',
+    filename: process.env.NODE_ENV === 'production' ? '../loshi/index.ejs' : 'index.html',
   },
   disableDynamicImport: false,
-  publicPath: process.env.NODE_ENV === 'production' ? '/public/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/public/loshi/' : '/',
   hash: true,
+  outputPath: path.resolve(__dirname, 'public/loshi'),
 };
 
 export default config;
